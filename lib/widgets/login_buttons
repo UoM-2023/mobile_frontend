@@ -1,0 +1,111 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+class ContactUsButton extends StatelessWidget {
+  final Function()? onTap;
+
+  const ContactUsButton({Key? key, this.onTap}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.symmetric(horizontal: 100),
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.3),
+              spreadRadius: 2,
+              blurRadius: 4,
+              offset: Offset(0, 2),
+            ),
+          ],
+          color: Color.fromARGB(235, 234, 183, 163),
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(height: 2),
+            Icon(
+              Icons.call,
+              color: Color.fromARGB(92, 20, 1, 1),
+              size: 20,
+            ),
+            SizedBox(width: 15),
+            Text(
+              'Contact Us',
+              style: GoogleFonts.lato(
+                color: Color.fromARGB(166, 255, 255, 255),
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MyButton extends StatelessWidget {
+ final Function()? onTap;
+
+  const MyButton({Key? key, this.onTap}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 293,
+        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.symmetric(horizontal: 25),
+        decoration: BoxDecoration(
+          color: Color(0xFFE65F2B),
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.3),
+              spreadRadius: 2,
+              blurRadius: 4,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Center(
+          child: Text(
+            'Log in',
+            style: GoogleFonts.lato(
+              color: Color.fromARGB(151, 255, 255, 255),
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ResetPasswordButton extends StatelessWidget {
+  final VoidCallback onPressed;
+
+  const ResetPasswordButton({Key? key, required this.onPressed})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: onPressed,
+      child: const Text(
+        'Reset Password',
+        style: TextStyle(
+          color: Color.fromARGB(120, 0, 0, 0),
+        ),
+      ),
+    );
+  }
+}
