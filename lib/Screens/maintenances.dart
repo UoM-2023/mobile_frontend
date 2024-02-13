@@ -56,11 +56,14 @@ class _MaintenancesState extends State<Maintenances> {
               ),
             ),
             backgroundColor: const Color.fromARGB(255, 234, 114, 70),
+            iconTheme: const IconThemeData(color: Colors.white),
             actions: [
               IconButton(
-                  color: Colors.white,
                   onPressed: _openAddMaintenanceOverlay,
-                  icon: const Icon(Icons.add)),
+                  icon: const Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  )),
             ]),
         body: Container(
           decoration: const BoxDecoration(

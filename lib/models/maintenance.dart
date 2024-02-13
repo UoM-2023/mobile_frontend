@@ -18,7 +18,7 @@ enum Category{
   Pest_Control,
   Safety_and_Security,
   Grounds_keeping,
-  Structural_Repairs,
+  Structural_Repairs, hintText,
   
 }
 
