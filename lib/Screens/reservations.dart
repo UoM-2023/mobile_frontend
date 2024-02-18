@@ -1,48 +1,54 @@
+import 'package:apartflow_mobile_app/widgets/reservations_widget.dart/new_reservation.dart';
 import 'package:flutter/material.dart';
-import 'package:apartflow_mobile_app/widgets/maintenance_widgets/maintenances_list/maintenance_list.dart';
-import 'package:apartflow_mobile_app/models/maintenance.dart';
-import 'package:apartflow_mobile_app/widgets/maintenance_widgets/new_maintenance.dart';
+import 'package:apartflow_mobile_app/models/reservation.dart';
+import 'package:apartflow_mobile_app/widgets/reservations_widget.dart/reservations_list/reservation_list.dart';
 import 'package:apartflow_mobile_app/models/enum.dart';
 
-class Maintenances extends StatefulWidget {
-  
-  const Maintenances({super.key});
+class Reservations extends StatefulWidget {
+  const Reservations({Key? key});
+
   @override
-  State<Maintenances> createState() {
-    return _MaintenancesState();
-  }
+  State<Reservations> createState() => _ReservationsState();
 }
 
-//dummy data
-class _MaintenancesState extends State<Maintenances> {
-  final List<Maintenance> _registeredMaintenances = [
-    Maintenance(
-      description: 'Dimming Lights',
-      date: DateTime.now(),
-      category: MaintenanceCategory.Electrical,
+class _ReservationsState extends State<Reservations> {
+  // Using dummy data
+  final List<Reservation> _registeredReservations = [
+    Reservation(
+      amenityName: AmenityType.EventSpace,
+      startDate: DateTime.now(),
+      endDate: DateTime.now().add(const Duration(hours: 2)),
+      needForHours: '2',
+      time: TimeOfDay.now(),
     ),
-    Maintenance(
-      description: 'Gurgling Sound from Drain',
-      date: DateTime.now(),
-      category: MaintenanceCategory.Plumbing,
+    Reservation(
+      amenityName: AmenityType.FitnessCenter,
+      startDate: DateTime.now(),
+      endDate: DateTime.now().add(const Duration(hours: 2)),
+      needForHours: '2',
+      time: TimeOfDay.now(),
     )
   ];
 
-//open the form after pressing plus button
-  _openAddMaintenanceOverlay() {
-//build in function for forms
+  void _openAddReservationsOverlay() {
     showModalBottomSheet(
-      //to make sure that the keyboard doesn't overlap over input fields
       isScrollControlled: true,
       context: context,
-      builder: (ctx) => NewMaintenance(onAddMaintenance: _addMaintenance),
+      builder: (ctx) => NewReservation(
+        onAddReservation: (reservation) {
+          // Add a new item to the list
+          setState(() {
+            _registeredReservations.add(reservation);
+          });
+        },
+      ),
     );
   }
 
-  void _addMaintenance(Maintenance maintenance) {
+  void _addReservation(Reservation reservation) {
     //add a new item to the list
     setState(() {
-      _registeredMaintenances.add(maintenance);
+      _registeredReservations.add(reservation);
     });
   }
 
@@ -52,7 +58,7 @@ class _MaintenancesState extends State<Maintenances> {
         backgroundColor: const Color.fromARGB(255, 234, 114, 70),
         appBar: AppBar(
             title: const Text(
-              "Maintenance",
+              "Reservations",
               style: TextStyle(
                 color: Colors.white,
               ),
@@ -61,7 +67,7 @@ class _MaintenancesState extends State<Maintenances> {
             iconTheme: const IconThemeData(color: Colors.white),
             actions: [
               IconButton(
-                  onPressed: _openAddMaintenanceOverlay,
+                  onPressed: _openAddReservationsOverlay,
                   icon: const Icon(
                     Icons.add,
                     color: Colors.white,
@@ -80,7 +86,6 @@ class _MaintenancesState extends State<Maintenances> {
               const SizedBox(
                 height: 30,
               ),
-
               const Row(children: [
                 SizedBox(width: 10),
                 Align(
@@ -97,14 +102,9 @@ class _MaintenancesState extends State<Maintenances> {
                 height: 20,
               ),
               Expanded(
-                
-                  //new maintenance list
-                  child:
-                      MaintenancesList(maintenances: _registeredMaintenances)),
-
+                child: ReservationsList(reservations: _registeredReservations),
+              ),
               const Text('Earlier'),
-              //earlier maintenance list
-              const Expanded(child: Text('Earlier maintenance requests')),
             ],
           ),
         ));

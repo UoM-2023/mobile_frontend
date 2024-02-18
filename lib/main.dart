@@ -1,3 +1,4 @@
+//import 'package:apartflow_mobile_app/Screens/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:apartflow_mobile_app/Screens/login.dart';
 
@@ -13,7 +14,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(useMaterial3: true),
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+     // home: LoginPage(),
+     home: LoginPage(),
+     
     );
   }
 }

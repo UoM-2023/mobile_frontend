@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:apartflow_mobile_app/models/maintenance.dart';
 //import 'package:maintenance/widgets/maintenances_list/maintenances_list.dart';
-import 'package:apartflow_mobile_app/widgets/maintenance_widgets/components/mainte_buttons.dart';
+import 'package:apartflow_mobile_app/models/enum.dart';
+
+
+import '../buttons/af_button.dart';
 
 class NewMaintenance extends StatefulWidget {
   const NewMaintenance({super.key, required this.onAddMaintenance});
@@ -16,7 +19,7 @@ class NewMaintenance extends StatefulWidget {
 
 class _NewMaintenance extends State<NewMaintenance> {
   final _descriptionController = TextEditingController();
-  Category _selectedCategory = Category.Appliances;
+  MaintenanceCategory _selectedCategory = MaintenanceCategory.Appliances;
 
   //to tell flutter that delete the controller when it is not needed anymore
   @override
@@ -64,7 +67,7 @@ class _NewMaintenance extends State<NewMaintenance> {
                 style: TextStyle(color: Colors.grey), // Label text color
               ),
               const SizedBox(height: 8),
-              DropdownButtonFormField<Category>(
+              DropdownButtonFormField<MaintenanceCategory>(
                 value: _selectedCategory,
                 decoration: const InputDecoration(
                   hintText: 'Select the Type', // Hint text
@@ -78,9 +81,9 @@ class _NewMaintenance extends State<NewMaintenance> {
                   ),
                   labelStyle: TextStyle(color: Colors.grey), // Label text color
                 ),
-                items: Category.values
+                items: MaintenanceCategory.values
                     .map(
-                      (category) => DropdownMenuItem<Category>(
+                      (category) => DropdownMenuItem<MaintenanceCategory>(
                         value: category,
                         child: Text(category.name.toUpperCase()),
                       ),
@@ -128,7 +131,7 @@ class _NewMaintenance extends State<NewMaintenance> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                CustomButton(
+                CustomButton_2(
                     text: 'Cancel',
                     onPressed: () {
                       Navigator.pop(context);
@@ -138,7 +141,7 @@ class _NewMaintenance extends State<NewMaintenance> {
                 const SizedBox(
                   width: 5,
                 ),
-                CustomButton(
+                CustomButton_2(
                   text: 'Save',
                   onPressed: _submitMaintenanceData,
                   buttonColor: Colors.orange[700]!,
