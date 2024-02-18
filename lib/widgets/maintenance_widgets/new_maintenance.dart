@@ -1,8 +1,8 @@
+import 'package:apartflow_mobile_app/util/barrell.dart';
 import 'package:flutter/material.dart';
 import 'package:apartflow_mobile_app/models/maintenance.dart';
 //import 'package:maintenance/widgets/maintenances_list/maintenances_list.dart';
 import 'package:apartflow_mobile_app/models/enum.dart';
-
 
 import '../buttons/af_button.dart';
 
@@ -131,22 +131,34 @@ class _NewMaintenance extends State<NewMaintenance> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                CustomButton_2(
-                    text: 'Cancel',
+                AFButton(
+                    type: ButtonType.secondary,
+                    fontSize: Constants.multiplier * 1.7,
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    buttonColor: Colors.grey[300]!,
-                    textColor: Colors.black),
+                    text: Strings.cancel),
+                // CustomButton_2(
+                //     text: 'Cancel',
+                //     onPressed: () {
+                //       Navigator.pop(context);
+                //     },
+                //     buttonColor: Color(0xFFE0E0E0)!,
+                //     textColor: Colors.black),
                 const SizedBox(
                   width: 5,
                 ),
-                CustomButton_2(
-                  text: 'Save',
-                  onPressed: _submitMaintenanceData,
-                  buttonColor: Colors.orange[700]!,
-                  textColor: Colors.white,
-                )
+                AFButton(
+                    type: ButtonType.primary,
+                    fontSize: Constants.multiplier * 1.7,
+                    onPressed: _submitMaintenanceData,
+                    text: Strings.save),
+                // CustomButton_2(
+                //   text: 'Save',
+                //   onPressed: _submitMaintenanceData,
+                //   buttonColor: Colors.orange[700]!,
+                //   textColor: Colors.white,
+                // )
               ],
             ),
           ]),

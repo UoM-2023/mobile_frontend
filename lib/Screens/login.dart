@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:apartflow_mobile_app/util/constants.dart';
-import 'package:apartflow_mobile_app/widgets/buttons/af_button.dart';
+import 'package:apartflow_mobile_app/util/barrell.dart';
+import 'package:apartflow_mobile_app/widgets/buttons/barrell.dart';
 import 'package:apartflow_mobile_app/widgets/login_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -63,11 +63,9 @@ class LoginPage extends StatelessWidget {
               ),
               SizedBox(height: 25),
 
-              CustomButton_1(
-                  color: Color(0xFFE65F2B),
-                  icon: null,
-                  size: 10,
-                  horizontalPadding: Constants.multiplier * 10,
+              AFButton(
+                  type: ButtonType.primary,
+                  shadow: true,
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -75,7 +73,22 @@ class LoginPage extends StatelessWidget {
                           builder: (context) => DashboardScreen()),
                     );
                   },
-                  text: 'Log in'),
+                  text: Strings.login,
+                  paddingX: (MediaQuery.of(context).size.width / 3)),
+
+              // CustomButton_1(
+              //     color: Color(0xFFE65F2B),
+              //     icon: null,
+              //     size: 10,
+              //     horizontalPadding: Constants.multiplier * 10,
+              //     onPressed: () {
+              //       Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //             builder: (context) => DashboardScreen()),
+              //       );
+              //     },
+              //     text: 'Log in'),
 
               SizedBox(height: 12),
               //reset password
@@ -96,13 +109,22 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 25),
-              CustomButton_1(
-                  icon: Icons.call,
-                  color: Color.fromARGB(235, 234, 183, 163),
-                  size: 10,
-                  horizontalPadding: Constants.multiplier * 2,
+
+              AFButton(
+                  type: ButtonType.faded,
+                  shadow: true,
                   onPressed: contactUs,
-                  text: 'Contact us'),
+                  text: Strings.contactUs,
+                  icon: Icons.call,
+                  paddingX: (MediaQuery.of(context).size.width / 12)),
+
+              // CustomButton_1(
+              //     icon: Icons.call,
+              //     color: Color(0xEBEAB7A3),
+              //     size: 10,
+              //     horizontalPadding: Constants.multiplier * 2,
+              //     onPressed: contactUs,
+              //     text: 'Contact us'),
               // ContactUsButton(
               //   onTap: contactUs,
               // ),
