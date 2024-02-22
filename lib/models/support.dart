@@ -8,15 +8,15 @@ final DateFormat formatter = DateFormat.yMd();
 const uuid = Uuid();
 
 // create a new class for maintenance
-class Maintenance {
-  Maintenance({
+class Support {
+  Support({
     required this.description,
     required this.date,
-    required this.category,
+    required this.Supportcategory,
   }) : id = uuid.v4(); //generates a unique string identifier
 
   final String id;
-  final MaintenanceCategory category;
+  final SupportCategory Supportcategory;
   final String description;
   final DateTime date;
 

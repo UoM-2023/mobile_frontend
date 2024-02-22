@@ -12,6 +12,7 @@ final List<Maintenance> maintenances;
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: maintenances.length,
+      //itemBuilder:(ctx, index) =>MaintenanceItem(maintenances[index]),);
       itemBuilder:(ctx, index) =>MaintenanceItem(maintenances[index]),);
   }
 }

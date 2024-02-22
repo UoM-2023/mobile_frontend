@@ -76,19 +76,7 @@ class LoginPage extends StatelessWidget {
                   text: Strings.login,
                   paddingX: (MediaQuery.of(context).size.width / 3)),
 
-              // CustomButton_1(
-              //     color: Color(0xFFE65F2B),
-              //     icon: null,
-              //     size: 10,
-              //     horizontalPadding: Constants.multiplier * 10,
-              //     onPressed: () {
-              //       Navigator.push(
-              //         context,
-              //         MaterialPageRoute(
-              //             builder: (context) => DashboardScreen()),
-              //       );
-              //     },
-              //     text: 'Log in'),
+             
 
               SizedBox(height: 12),
               //reset password
@@ -118,16 +106,7 @@ class LoginPage extends StatelessWidget {
                   icon: Icons.call,
                   paddingX: (MediaQuery.of(context).size.width / 12)),
 
-              // CustomButton_1(
-              //     icon: Icons.call,
-              //     color: Color(0xEBEAB7A3),
-              //     size: 10,
-              //     horizontalPadding: Constants.multiplier * 2,
-              //     onPressed: contactUs,
-              //     text: 'Contact us'),
-              // ContactUsButton(
-              //   onTap: contactUs,
-              // ),
+              
               SizedBox(
                 height: 39,
               ),

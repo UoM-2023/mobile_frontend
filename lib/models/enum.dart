@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+
 
 
 enum MaintenanceCategory{
@@ -22,4 +22,11 @@ enum AmenityType {
   LaundryFacilities,
   StorageUnits,
   PetServices,
+}
+
+enum SupportCategory {
+  Complains,
+  Suggestions,
+  Requests,
+  
 }

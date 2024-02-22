@@ -1,10 +1,13 @@
 import 'package:apartflow_mobile_app/Screens/reservations.dart';
+import 'package:apartflow_mobile_app/Screens/supports.dart';
 import 'package:apartflow_mobile_app/util/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:apartflow_mobile_app/widgets/buttons/af_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'maintenances.dart';
-import 'package:apartflow_mobile_app/widgets/user_profile.dart';
+import 'package:apartflow_mobile_app/Screens/guests.dart';
+import 'package:apartflow_mobile_app/widgets/components/user_profile.dart';
+import 'package:apartflow_mobile_app/util/barrell.dart';
+import 'package:apartflow_mobile_app/widgets/buttons/barrell.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({Key? key});
@@ -84,6 +87,7 @@ class DashboardScreen extends StatelessWidget {
                                 ),
                               );
                             },
+                            fontSize: null,
                           ),
                           const SizedBox(height: 10),
                           DashboardButton(
@@ -91,8 +95,14 @@ class DashboardScreen extends StatelessWidget {
                             icon: Icons.people,
                             iconColor: Colors.green,
                             onPressed: () {
-                              // Add your guests button logic here
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const Guests(),
+                                ),
+                              );
                             },
+                            fontSize: null,
                           ),
                           const SizedBox(height: 10),
                           DashboardButton(
@@ -107,6 +117,7 @@ class DashboardScreen extends StatelessWidget {
                                 ),
                               );
                             },
+                            fontSize: null,
                           ),
                           const SizedBox(height: 10),
                           DashboardButton(
@@ -114,8 +125,14 @@ class DashboardScreen extends StatelessWidget {
                             icon: Icons.thumb_up,
                             iconColor: Colors.red,
                             onPressed: () {
-                              // Add your support button logic here
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const Supports(),
+                                ),
+                              );
                             },
+                            fontSize: null,
                           ),
                         ],
                       ),

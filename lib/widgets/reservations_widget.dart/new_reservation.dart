@@ -2,13 +2,13 @@ import 'package:apartflow_mobile_app/models/reservation.dart';
 import 'package:apartflow_mobile_app/models/enum.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import '../buttons/af_button.dart';
+import 'package:apartflow_mobile_app/util/barrell.dart';
 
 final formatter = DateFormat.yMd();
 
 class NewReservation extends StatefulWidget {
-  const NewReservation({Key? key, required this.onAddReservation});
+  const NewReservation({super.key, required this.onAddReservation});
 
   final void Function(dynamic reservation) onAddReservation;
 
@@ -135,7 +135,8 @@ class _NewReservation extends State<NewReservation> {
             DropdownButtonFormField<AmenityType>(
               value: _selectedAmenityType,
               decoration: const InputDecoration(
-                hintText: 'Select the Type', // Hint text
+                hintText: 'Select the Type',
+                // Hint text
                 border: OutlineInputBorder(),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey),
@@ -150,7 +151,9 @@ class _NewReservation extends State<NewReservation> {
                   .map(
                     (category) => DropdownMenuItem<AmenityType>(
                       value: category,
-                      child: Text(category.name.toUpperCase()),
+                      child: Container(
+                          
+                          child: Text(category.name.toUpperCase())),
                     ),
                   )
                   .toList(),
@@ -299,22 +302,21 @@ class _NewReservation extends State<NewReservation> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                CustomButton_2(
-                    text: 'Cancel',
+                AFButton(
+                    type: ButtonType.secondary,
+                    fontSize: Constants.multiplier * 1.7,
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    buttonColor: Colors.grey[300]!,
-                    textColor: Colors.black),
+                    text: Strings.cancel),
                 const SizedBox(
                   width: 5,
                 ),
-                CustomButton_2(
-                  text: 'Save',
-                  onPressed: _submitReservationData,
-                  buttonColor: Colors.orange[700]!,
-                  textColor: Colors.white,
-                )
+                AFButton(
+                    type: ButtonType.primary,
+                    fontSize: Constants.multiplier * 1.7,
+                    onPressed: _submitReservationData,
+                    text: Strings.save)
               ],
             ),
           ]),

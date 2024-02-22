@@ -1,25 +1,25 @@
 import 'package:apartflow_mobile_app/util/barrell.dart';
 import 'package:flutter/material.dart';
-import 'package:apartflow_mobile_app/models/maintenance.dart';
+import 'package:apartflow_mobile_app/models/support.dart';
 //import 'package:maintenance/widgets/maintenances_list/maintenances_list.dart';
 import 'package:apartflow_mobile_app/models/enum.dart';
 
 import '../buttons/af_button.dart';
 
-class NewMaintenance extends StatefulWidget {
-  const NewMaintenance({super.key, required this.onAddMaintenance});
+class NewSupport extends StatefulWidget {
+  const NewSupport({super.key, required this.onAddSupport});
 
-  final void Function(Maintenance maintenance) onAddMaintenance;
+  final void Function(Support support) onAddSupport;
 
   @override
-  State<NewMaintenance> createState() {
-    return _NewMaintenance();
+  State<NewSupport> createState() {
+    return _NewSupport();
   }
 }
 
-class _NewMaintenance extends State<NewMaintenance> {
+class _NewSupport extends State<NewSupport> {
   final _descriptionController = TextEditingController();
-  MaintenanceCategory _selectedCategory = MaintenanceCategory.Appliances;
+  SupportCategory _selectedSupportCategory = SupportCategory.Suggestions;
 
   //to tell flutter that delete the controller when it is not needed anymore
   @override
@@ -28,11 +28,11 @@ class _NewMaintenance extends State<NewMaintenance> {
     super.dispose();
   }
 
-  void _submitMaintenanceData() {
-    widget.onAddMaintenance(Maintenance(
+  void _submitSupportData() {
+    widget.onAddSupport(Support(
         description: _descriptionController.text,
         date: DateTime.now(),
-        category: _selectedCategory));
+        Supportcategory: _selectedSupportCategory));
     Navigator.pop(context);
   }
 
@@ -67,8 +67,8 @@ class _NewMaintenance extends State<NewMaintenance> {
                 style: TextStyle(color: Colors.grey), // Label text color
               ),
               const SizedBox(height: 8),
-              DropdownButtonFormField<MaintenanceCategory>(
-                value: _selectedCategory,
+              DropdownButtonFormField<SupportCategory>(
+                value: _selectedSupportCategory,
                 decoration: const InputDecoration(
                   hintText: 'Select the Type', // Hint text
                   border: OutlineInputBorder(),
@@ -81,9 +81,9 @@ class _NewMaintenance extends State<NewMaintenance> {
                   ),
                   labelStyle: TextStyle(color: Colors.grey), // Label text color
                 ),
-                items: MaintenanceCategory.values
+                items: SupportCategory.values
                     .map(
-                      (category) => DropdownMenuItem<MaintenanceCategory>(
+                      (category) => DropdownMenuItem<SupportCategory>(
                         value: category,
                         child: Text(category.name.toUpperCase()),
                       ),
@@ -94,7 +94,7 @@ class _NewMaintenance extends State<NewMaintenance> {
                     return;
                   }
                   setState(() {
-                    _selectedCategory = value;
+                    _selectedSupportCategory = value;
                   });
                 },
               ),
@@ -145,7 +145,7 @@ class _NewMaintenance extends State<NewMaintenance> {
                 AFButton(
                     type: ButtonType.primary,
                     fontSize: Constants.multiplier * 1.7,
-                    onPressed: _submitMaintenanceData,
+                    onPressed: _submitSupportData,
                     text: Strings.save),
                
               ],

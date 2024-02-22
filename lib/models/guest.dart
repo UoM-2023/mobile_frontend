@@ -1,23 +1,26 @@
 //import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
-import 'package:apartflow_mobile_app/models/enum.dart';
+
 
 final DateFormat formatter = DateFormat.yMd();
 
 const uuid = Uuid();
 
 // create a new class for maintenance
-class Maintenance {
-  Maintenance({
-    required this.description,
-    required this.date,
-    required this.category,
+class Guest {
+  Guest({
+   
+   required this.name,
+   required this.vehicle_NO,
+   required this.date,
+   required this.nic,
   }) : id = uuid.v4(); //generates a unique string identifier
 
   final String id;
-  final MaintenanceCategory category;
-  final String description;
+  final String name;
+  final String vehicle_NO;
+  final String nic;
   final DateTime date;
 
   String get formattedDate {
