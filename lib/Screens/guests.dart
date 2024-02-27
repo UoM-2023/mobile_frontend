@@ -2,6 +2,7 @@ import 'package:apartflow_mobile_app/models/guest.dart';
 import 'package:apartflow_mobile_app/widgets/guest_widget/guest_list/guest_list.dart';
 import 'package:apartflow_mobile_app/widgets/guest_widget/new_guest.dart';
 import 'package:flutter/material.dart';
+import 'package:apartflow_mobile_app/widgets/bottomnavigationbar.dart';
 
 class Guests extends StatefulWidget {
   const Guests({super.key});
@@ -13,6 +14,7 @@ class Guests extends StatefulWidget {
 
 //dummy data
 class _GuestsState extends State<Guests> {
+   int _selectedIndex = 0;
   final List<Guest> _registeredGuests = [
     Guest(
         name: 'Noyel Fernando',
@@ -111,6 +113,14 @@ class _GuestsState extends State<Guests> {
               const Expanded(child: Text('Earlier guests requests')),
             ],
           ),
-        ));
+        ),
+        bottomNavigationBar: NavigationMenu(selectedIndex: _selectedIndex,
+              onItemTapped: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });} ),
+        );
+
+        
   }
 }

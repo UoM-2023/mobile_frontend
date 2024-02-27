@@ -1,16 +1,21 @@
-import 'package:apartflow_mobile_app/Screens/reservations.dart';
-import 'package:apartflow_mobile_app/Screens/supports.dart';
+import 'package:apartflow_mobile_app/Screens/barrell.dart';
 import 'package:apartflow_mobile_app/util/constants.dart';
+import 'package:apartflow_mobile_app/widgets/bottomnavigationbar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'maintenances.dart';
-import 'package:apartflow_mobile_app/Screens/guests.dart';
 import 'package:apartflow_mobile_app/widgets/components/user_profile.dart';
 import 'package:apartflow_mobile_app/util/barrell.dart';
 import 'package:apartflow_mobile_app/widgets/buttons/barrell.dart';
 
-class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({Key? key});
+class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({Key? key}) : super(key: key);
+
+  @override
+  _DashboardScreenState createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -208,6 +213,21 @@ class DashboardScreen extends StatelessWidget {
               ),
             ),
           ),
+
+   Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: NavigationMenu(
+              selectedIndex: _selectedIndex,
+              onItemTapped: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
+              },
+            ),
+          ),
+
         ],
       ),
     );

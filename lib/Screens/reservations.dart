@@ -4,6 +4,8 @@ import 'package:apartflow_mobile_app/models/reservation.dart';
 import 'package:apartflow_mobile_app/widgets/reservations_widget.dart/reservations_list/reservation_list.dart';
 import 'package:apartflow_mobile_app/models/enum.dart';
 
+import '../widgets/bottomnavigationbar.dart';
+
 class Reservations extends StatefulWidget {
   const Reservations({Key? key});
 
@@ -12,6 +14,7 @@ class Reservations extends StatefulWidget {
 }
 
 class _ReservationsState extends State<Reservations> {
+  int _selectedIndex = 0;
   // Using dummy data
   final List<Reservation> _registeredReservations = [
     Reservation(
@@ -107,6 +110,12 @@ class _ReservationsState extends State<Reservations> {
               const Text('Earlier'),
             ],
           ),
-        ));
+        ),
+        bottomNavigationBar: NavigationMenu(selectedIndex: _selectedIndex,
+              onItemTapped: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });} ),
+        );
   }
 }

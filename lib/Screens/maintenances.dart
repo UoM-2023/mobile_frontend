@@ -4,6 +4,8 @@ import 'package:apartflow_mobile_app/models/maintenance.dart';
 import 'package:apartflow_mobile_app/widgets/maintenance_widgets/new_maintenance.dart';
 import 'package:apartflow_mobile_app/models/enum.dart';
 
+import '../widgets/bottomnavigationbar.dart';
+
 class Maintenances extends StatefulWidget {
   
   const Maintenances({super.key});
@@ -15,6 +17,7 @@ class Maintenances extends StatefulWidget {
 
 //dummy data
 class _MaintenancesState extends State<Maintenances> {
+  int _selectedIndex = 0;
   final List<Maintenance> _registeredMaintenances = [
     Maintenance(
       description: 'Dimming Lights',
@@ -107,6 +110,12 @@ class _MaintenancesState extends State<Maintenances> {
               const Expanded(child: Text('Earlier maintenance requests')),
             ],
           ),
-        ));
+        ),
+        bottomNavigationBar: NavigationMenu(selectedIndex: _selectedIndex,
+              onItemTapped: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });} ),
+        );
   }
 }

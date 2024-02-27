@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:apartflow_mobile_app/models/support.dart';
 import 'package:apartflow_mobile_app/models/enum.dart';
+import '../widgets/bottomnavigationbar.dart';
 import '../widgets/support_widget.dart/new_support.dart';
 import '../widgets/support_widget.dart/supports_list/support_list.dart';
 
@@ -15,6 +16,7 @@ class Supports extends StatefulWidget {
 
 //dummy data
 class _SupportsState extends State<Supports> {
+  int _selectedIndex = 0;
   final List<Support> _registeredSupports = [
     Support(
       description: 'Requested maintenance did not do yet',
@@ -106,6 +108,12 @@ class _SupportsState extends State<Supports> {
               const Expanded(child: Text('Earlier support requests')),
             ],
           ),
-        ));
+        ),
+        bottomNavigationBar: NavigationMenu(selectedIndex: _selectedIndex,
+              onItemTapped: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });} ),
+        );
   }
 }

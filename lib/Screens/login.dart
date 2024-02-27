@@ -6,7 +6,7 @@ import 'package:apartflow_mobile_app/widgets/login_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'dashboard.dart';
+import 'package:apartflow_mobile_app/Screens/barrell.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -67,16 +67,14 @@ class LoginPage extends StatelessWidget {
                   type: ButtonType.primary,
                   shadow: true,
                   onPressed: () {
-                    Navigator.push(
+                    // After successful login
+                    Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => DashboardScreen()),
+                      MaterialPageRoute(builder: (context) => DashboardScreen()),
                     );
                   },
                   text: Strings.login,
                   paddingX: (MediaQuery.of(context).size.width / 3)),
-
-             
 
               SizedBox(height: 12),
               //reset password
@@ -106,7 +104,6 @@ class LoginPage extends StatelessWidget {
                   icon: Icons.call,
                   paddingX: (MediaQuery.of(context).size.width / 12)),
 
-              
               SizedBox(
                 height: 39,
               ),

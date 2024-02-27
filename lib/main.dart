@@ -1,6 +1,6 @@
 //import 'package:apartflow_mobile_app/Screens/dashboard.dart';
 import 'package:flutter/material.dart';
-import 'package:apartflow_mobile_app/Screens/login.dart';
+import './Screens/barrell.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final theme = ThemeData(
@@ -9,11 +9,11 @@ final theme = ThemeData(
 );
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ApartFlow());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class ApartFlow extends StatelessWidget {
+  const ApartFlow({super.key});
 
   @override
   Widget build(BuildContext context) {
