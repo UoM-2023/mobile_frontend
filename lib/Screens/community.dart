@@ -16,8 +16,27 @@ class _CommunityState extends State<Community> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:const Text('Bills'),
-      ),
+        elevation: 0,
+
+        centerTitle: true,
+          title: const Text(
+            "Communities",
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          backgroundColor: const Color.fromARGB(255, 234, 114, 70),
+          iconTheme: const IconThemeData(color: Colors.white),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  
+                },
+                icon: const Icon(
+                  Icons.add,
+                  color: Colors.white,
+                )),
+          ]),
       body: const Center(
         child: Text('Search Page Content'),
       ),

@@ -62,33 +62,25 @@ class _NewSupport extends State<NewSupport> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Type', // Label text
-                style: TextStyle(color: Colors.grey), // Label text color
-              ),
               const SizedBox(height: 8),
               DropdownButtonFormField<SupportCategory>(
                 value: _selectedSupportCategory,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Select the Type', // Hint text
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
+                    borderSide: const BorderSide(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Color.fromARGB(255, 230, 168, 114)),
+                    borderSide: const BorderSide(
+                        color: Color.fromARGB(255, 230, 168, 114)),
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
-                  labelStyle: TextStyle(color: Colors.grey), // Label text color
+                  labelText: 'Type', // Label text
+                  labelStyle: const TextStyle(color: Colors.grey),
                 ),
-                items: SupportCategory.values
-                    .map(
-                      (category) => DropdownMenuItem<SupportCategory>(
-                        value: category,
-                        child: Text(category.name.toUpperCase()),
-                      ),
-                    )
-                    .toList(),
+                isExpanded: false,
                 onChanged: (value) {
                   if (value == null) {
                     return;
@@ -97,32 +89,45 @@ class _NewSupport extends State<NewSupport> {
                     _selectedSupportCategory = value;
                   });
                 },
+                items: SupportCategory.values.map((category) {
+                  return DropdownMenuItem<SupportCategory>(
+                    value: category,
+                    child: Text(
+                      category.name.toUpperCase(),
+                      style: const TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  );
+                }).toList(),
               ),
             ],
           ),
           const SizedBox(height: 16),
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Text(
-              'Description',
-              style: TextStyle(color: Colors.grey),
-            ),
             const SizedBox(height: 8),
             TextField(
               controller: _descriptionController,
               maxLength: 50,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 hintText: 'Type here', // Hint text
-                border: OutlineInputBorder(), // Border
+                border: const OutlineInputBorder(), // Border
                 enabledBorder: OutlineInputBorder(
                   // Border when enabled
-                  borderSide: BorderSide(color: Colors.grey),
+                  borderSide: const BorderSide(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(
+                      8.0), // Rounded corners for the border
                 ),
                 focusedBorder: OutlineInputBorder(
                   // Border when focused
-                  borderSide:
-                      BorderSide(color: Color.fromARGB(255, 230, 168, 114)),
+                  borderSide: const BorderSide(
+                      color: Color.fromARGB(255, 230, 168, 114)),
+                  borderRadius: BorderRadius.circular(
+                      8.0), // Rounded corners for the border
                 ),
-                labelStyle: TextStyle(color: Colors.grey), // Label text color
+                labelText: 'Description', // Label text
+                labelStyle:
+                    const TextStyle(color: Colors.grey), // Label text color
               ),
             ),
             const SizedBox(
@@ -138,7 +143,6 @@ class _NewSupport extends State<NewSupport> {
                       Navigator.pop(context);
                     },
                     text: Strings.cancel),
-               
                 const SizedBox(
                   width: 5,
                 ),
@@ -147,7 +151,6 @@ class _NewSupport extends State<NewSupport> {
                     fontSize: Constants.multiplier * 1.7,
                     onPressed: _submitSupportData,
                     text: Strings.save),
-               
               ],
             ),
           ]),

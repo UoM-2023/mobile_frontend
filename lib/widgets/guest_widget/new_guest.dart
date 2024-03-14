@@ -71,164 +71,172 @@ class _NewGuest extends State<NewGuest> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
-      child: Column(children: [
-        Row(
-          children: [
-            IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-                //      Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => ma),
-                // );
-              },
-              icon: const Icon(Icons.arrow_back_ios),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 30,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Name', // Label text
-              style: TextStyle(color: Colors.grey), // Label text color
-            ),
-            const SizedBox(height: 8),
-            TextField(
-              controller: _nameController,
-              maxLength: 50,
-              decoration: const InputDecoration(
-                hintText: 'Type here', // Hint text
-                border: OutlineInputBorder(), // Border
-                enabledBorder: OutlineInputBorder(
-                  // Border when enabled
-                  borderSide: BorderSide(color: Colors.grey),
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
+          child: Column(children: [
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    //      Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => ma),
+                    // );
+                  },
+                  icon: const Icon(Icons.arrow_back_ios),
                 ),
-                focusedBorder: OutlineInputBorder(
-                  // Border when focused
-                  borderSide:
-                      BorderSide(color: Color.fromARGB(255, 230, 168, 114)),
-                ),
-                labelStyle: TextStyle(color: Colors.grey), // Label text color
-              ),
+              ],
             ),
             const SizedBox(
-              height: 16,
+              height: 30,
             ),
-            const Text(
-              'NIC', // Label text
-              style: TextStyle(color: Colors.grey), // Label text color
-            ),
-            TextField(
-              controller: _nicController,
-              maxLength: 50,
-              decoration: const InputDecoration(
-                hintText: 'Type here', // Hint text
-                border: OutlineInputBorder(), // Border
-                enabledBorder: OutlineInputBorder(
-                  // Border when enabled
-                  borderSide: BorderSide(color: Colors.grey),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Name', // Label text
+                  style: TextStyle(color: Colors.grey), // Label text color
                 ),
-                focusedBorder: OutlineInputBorder(
-                  // Border when focused
-                  borderSide:
-                      BorderSide(color: Color.fromARGB(255, 230, 168, 114)),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: _nameController,
+                  maxLength: 50,
+                  decoration: const InputDecoration(
+                    hintText: 'Type here', // Hint text
+                    border: OutlineInputBorder(), // Border
+                    enabledBorder: OutlineInputBorder(
+                      // Border when enabled
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      // Border when focused
+                      borderSide:
+                          BorderSide(color: Color.fromARGB(255, 230, 168, 114)),
+                    ),
+                    labelStyle:
+                        TextStyle(color: Colors.grey), // Label text color
+                  ),
                 ),
-                labelStyle: TextStyle(color: Colors.grey), // Label text color
-              ),
+                const SizedBox(
+                  height: 16,
+                ),
+                const Text(
+                  'NIC', // Label text
+                  style: TextStyle(color: Colors.grey), // Label text color
+                ),
+                TextField(
+                  controller: _nicController,
+                  maxLength: 50,
+                  decoration: const InputDecoration(
+                    hintText: 'Type here', // Hint text
+                    border: OutlineInputBorder(), // Border
+                    enabledBorder: OutlineInputBorder(
+                      // Border when enabled
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      // Border when focused
+                      borderSide:
+                          BorderSide(color: Color.fromARGB(255, 230, 168, 114)),
+                    ),
+                    labelStyle:
+                        TextStyle(color: Colors.grey), // Label text color
+                  ),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                const Text(
+                  'Vehicle No', // Label text
+                  style: TextStyle(color: Colors.grey), // Label text color
+                ),
+                TextField(
+                  controller: _vehicleNOController,
+                  maxLength: 50,
+                  decoration: const InputDecoration(
+                    hintText: 'Type here', // Hint text
+                    border: OutlineInputBorder(), // Border
+                    enabledBorder: OutlineInputBorder(
+                      // Border when enabled
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      // Border when focused
+                      borderSide:
+                          BorderSide(color: Color.fromARGB(255, 230, 168, 114)),
+                    ),
+                    labelStyle:
+                        TextStyle(color: Colors.grey), // Label text color
+                  ),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                const Text(
+                  'Arrival Date', // Label text
+                  style: TextStyle(color: Colors.grey), // Label text color
+                ),
+                const SizedBox(height: 5),
+                TextField(
+                  controller: TextEditingController(
+                    text: _selectedArrivalDate != null
+                        ? formatter.format(_selectedArrivalDate!)
+                        : '',
+                  ),
+                  decoration: InputDecoration(
+                    hintText: 'Date', // Hint text
+                    border: const OutlineInputBorder(), // Border
+                    enabledBorder: const OutlineInputBorder(
+                      // Border when enabled
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
+                    focusedBorder: const OutlineInputBorder(
+                      // Border when focused
+                      borderSide:
+                          BorderSide(color: Color.fromARGB(255, 230, 168, 114)),
+                    ),
+                    labelStyle: const TextStyle(color: Colors.grey),
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.calendar_today),
+                      onPressed: _arrivalDatePicker,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+              ],
             ),
             const SizedBox(
-              height: 16,
+              height: 40,
             ),
-            const Text(
-              'Vehicle No', // Label text
-              style: TextStyle(color: Colors.grey), // Label text color
-            ),
-            TextField(
-              controller: _vehicleNOController,
-              maxLength: 50,
-              decoration: const InputDecoration(
-                hintText: 'Type here', // Hint text
-                border: OutlineInputBorder(), // Border
-                enabledBorder: OutlineInputBorder(
-                  // Border when enabled
-                  borderSide: BorderSide(color: Colors.grey),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                AFButton(
+                    type: ButtonType.secondary,
+                    fontSize: Constants.multiplier * 1.7,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    text: Strings.cancel),
+                const SizedBox(
+                  width: 5,
                 ),
-                focusedBorder: OutlineInputBorder(
-                  // Border when focused
-                  borderSide:
-                      BorderSide(color: Color.fromARGB(255, 230, 168, 114)),
-                ),
-                labelStyle: TextStyle(color: Colors.grey), // Label text color
-              ),
+                AFButton(
+                    type: ButtonType.primary,
+                    fontSize: Constants.multiplier * 1.7,
+                    onPressed: _submitGuestData,
+                    text: Strings.save),
+              ],
             ),
-            const SizedBox(
-              height: 16,
-            ),
-            const Text(
-              'Arrival Date', // Label text
-              style: TextStyle(color: Colors.grey), // Label text color
-            ),
-            const SizedBox(height: 5),
-            TextField(
-              controller: TextEditingController(
-                text: _selectedArrivalDate != null
-                    ? formatter.format(_selectedArrivalDate!)
-                    : '',
-              ),
-              decoration: InputDecoration(
-                hintText: 'Date', // Hint text
-                border: const OutlineInputBorder(), // Border
-                enabledBorder: const OutlineInputBorder(
-                  // Border when enabled
-                  borderSide: BorderSide(color: Colors.grey),
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  // Border when focused
-                  borderSide:
-                      BorderSide(color: Color.fromARGB(255, 230, 168, 114)),
-                ),
-                labelStyle: const TextStyle(color: Colors.grey),
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.calendar_today),
-                  onPressed: _arrivalDatePicker,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-          ],
+          ]),
         ),
-        const SizedBox(
-          height: 40,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            AFButton(
-                type: ButtonType.secondary,
-                fontSize: Constants.multiplier * 1.7,
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                text: Strings.cancel),
-            const SizedBox(
-              width: 5,
-            ),
-            AFButton(
-                type: ButtonType.primary,
-                fontSize: Constants.multiplier * 1.7,
-                onPressed: _submitGuestData,
-                text: Strings.save),
-          ],
-        ),
-      ]),
+      ),
     );
   }
 }

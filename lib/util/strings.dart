@@ -7,4 +7,5 @@ class Strings {
   static const String guests = "Guests";
   static const String reservation = "Reservation";
   static const String support = "Support";
+  static const String viewHistory = "View History";
 }

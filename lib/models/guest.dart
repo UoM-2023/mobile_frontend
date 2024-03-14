@@ -7,7 +7,7 @@ final DateFormat formatter = DateFormat.yMd();
 
 const uuid = Uuid();
 
-// create a new class for maintenance
+
 class Guest {
   Guest({
    

@@ -109,218 +109,223 @@ class _NewReservation extends State<NewReservation> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
-      child: Column(
-        children: [
-          Row(
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
+          child: Column(
             children: [
-              IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(Icons.arrow_back_ios),
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.arrow_back_ios),
+                  ),
+                ],
               ),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Text(
-              'Amenity Name', // Label text
-              style: TextStyle(color: Colors.grey), // Label text color
-            ),
-            const SizedBox(height: 5),
-            DropdownButtonFormField<AmenityType>(
-              value: _selectedAmenityType,
-              decoration: const InputDecoration(
-                hintText: 'Select the Type',
-                // Hint text
-                border: OutlineInputBorder(),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: Color.fromARGB(255, 230, 168, 114)),
-                ),
-                labelStyle: TextStyle(color: Colors.grey), // Label text color
+              const SizedBox(
+                height: 10,
               ),
-              items: AmenityType.values
-                  .map(
-                    (category) => DropdownMenuItem<AmenityType>(
-                      value: category,
-                      child: Container(
-                          
-                          child: Text(category.name.toUpperCase())),
-                    ),
-                  )
-                  .toList(),
-              onChanged: (value) {
-                if (value == null) {
-                  return;
-                }
-                setState(() {
-                  _selectedAmenityType = value;
-                });
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Text(
-              'Reservation Start Date', // Label text
-              style: TextStyle(color: Colors.grey), // Label text color
-            ),
-            const SizedBox(height: 5),
-            TextField(
-              controller: TextEditingController(
-                text: _selectedStartDate != null
-                    ? formatter.format(_selectedStartDate!)
-                    : '',
-              ),
-              decoration: InputDecoration(
-                hintText: 'Selected Date', // Hint text
-                border: const OutlineInputBorder(), // Border
-                enabledBorder: const OutlineInputBorder(
-                  // Border when enabled
-                  borderSide: BorderSide(color: Colors.grey),
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  // Border when focused
-                  borderSide:
-                      BorderSide(color: Color.fromARGB(255, 230, 168, 114)),
-                ),
-                labelStyle: const TextStyle(color: Colors.grey),
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.calendar_today),
-                  onPressed: _startDatePicker,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Text(
-              'Reservation End Date', // Label text
-              style: TextStyle(color: Colors.grey), // Label text color
-            ),
-            const SizedBox(height: 5),
-            TextField(
-              controller: TextEditingController(
-                text: _selectedEndDate != null
-                    ? formatter.format(_selectedEndDate!)
-                    : '',
-              ),
-              decoration: InputDecoration(
-                hintText: 'Selected Date', // Hint text
-                border: const OutlineInputBorder(), // Border
-                enabledBorder: const OutlineInputBorder(
-                  // Border when enabled
-                  borderSide: BorderSide(color: Colors.grey),
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  // Border when focused
-                  borderSide:
-                      BorderSide(color: Color.fromARGB(255, 230, 168, 114)),
-                ),
-                labelStyle: const TextStyle(color: Colors.grey),
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.calendar_today),
-                  onPressed: _endDatePicker,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Text(
-              'Reservation End Time', // Label text
-              style: TextStyle(color: Colors.grey), // Label text color
-            ),
-            const SizedBox(height: 5),
-            TextField(
-              controller: TextEditingController(
-                text: _selectedStartTime != null
-                    ? _selectedStartTime!.format(context)
-                    : '',
-              ),
-              decoration: InputDecoration(
-                hintText: 'Selected Time', // Hint text
-                border: const OutlineInputBorder(), // Border
-                enabledBorder: const OutlineInputBorder(
-                  // Border when enabled
-                  borderSide: BorderSide(color: Colors.grey),
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  // Border when focused
-                  borderSide:
-                      BorderSide(color: Color.fromARGB(255, 230, 168, 114)),
-                ),
-                labelStyle: const TextStyle(color: Colors.grey),
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.access_time),
-                  onPressed: _startTimePicker,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 const Text(
-                  'Need for (Hours)',
-                  style: TextStyle(color: Colors.grey),
+                  'Amenity Name', // Label text
+                  style: TextStyle(color: Colors.grey), // Label text color
                 ),
                 const SizedBox(height: 5),
-                TextField(
-                  controller: _needTimeController,
-                  maxLength: 50,
+                DropdownButtonFormField<AmenityType>(
+                  value: _selectedAmenityType,
                   decoration: const InputDecoration(
-                    hintText: 'Type here', // Hint text
-                    border: OutlineInputBorder(), // Border
+                    hintText: 'Select the Type',
+                    // Hint text
+                    border: OutlineInputBorder(),
                     enabledBorder: OutlineInputBorder(
-                      // Border when enabled
                       borderSide: BorderSide(color: Colors.grey),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      // Border when focused
                       borderSide:
                           BorderSide(color: Color.fromARGB(255, 230, 168, 114)),
                     ),
                     labelStyle:
                         TextStyle(color: Colors.grey), // Label text color
                   ),
+                  items: AmenityType.values
+                      .map(
+                        (category) => DropdownMenuItem<AmenityType>(
+                          value: category,
+                          child: Container(
+                              child: Text(category.name.toUpperCase())),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (value) {
+                    if (value == null) {
+                      return;
+                    }
+                    setState(() {
+                      _selectedAmenityType = value;
+                    });
+                  },
                 ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            const SizedBox(
-              height: 40,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                AFButton(
-                    type: ButtonType.secondary,
-                    fontSize: Constants.multiplier * 1.7,
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    text: Strings.cancel),
                 const SizedBox(
-                  width: 5,
+                  height: 20,
                 ),
-                AFButton(
-                    type: ButtonType.primary,
-                    fontSize: Constants.multiplier * 1.7,
-                    onPressed: _submitReservationData,
-                    text: Strings.save)
-              ],
-            ),
-          ]),
-        ],
+                const Text(
+                  'Reservation Start Date', // Label text
+                  style: TextStyle(color: Colors.grey), // Label text color
+                ),
+                const SizedBox(height: 5),
+                TextField(
+                  controller: TextEditingController(
+                    text: _selectedStartDate != null
+                        ? formatter.format(_selectedStartDate!)
+                        : '',
+                  ),
+                  decoration: InputDecoration(
+                    hintText: 'Selected Date', // Hint text
+                    border: const OutlineInputBorder(), // Border
+                    enabledBorder: const OutlineInputBorder(
+                      // Border when enabled
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
+                    focusedBorder: const OutlineInputBorder(
+                      // Border when focused
+                      borderSide:
+                          BorderSide(color: Color.fromARGB(255, 230, 168, 114)),
+                    ),
+                    labelStyle: const TextStyle(color: Colors.grey),
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.calendar_today),
+                      onPressed: _startDatePicker,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  'Reservation End Date', // Label text
+                  style: TextStyle(color: Colors.grey), // Label text color
+                ),
+                const SizedBox(height: 5),
+                TextField(
+                  controller: TextEditingController(
+                    text: _selectedEndDate != null
+                        ? formatter.format(_selectedEndDate!)
+                        : '',
+                  ),
+                  decoration: InputDecoration(
+                    hintText: 'Selected Date', // Hint text
+                    border: const OutlineInputBorder(), // Border
+                    enabledBorder: const OutlineInputBorder(
+                      // Border when enabled
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
+                    focusedBorder: const OutlineInputBorder(
+                      // Border when focused
+                      borderSide:
+                          BorderSide(color: Color.fromARGB(255, 230, 168, 114)),
+                    ),
+                    labelStyle: const TextStyle(color: Colors.grey),
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.calendar_today),
+                      onPressed: _endDatePicker,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  'Reservation End Time', // Label text
+                  style: TextStyle(color: Colors.grey), // Label text color
+                ),
+                const SizedBox(height: 5),
+                TextField(
+                  controller: TextEditingController(
+                    text: _selectedStartTime != null
+                        ? _selectedStartTime!.format(context)
+                        : '',
+                  ),
+                  decoration: InputDecoration(
+                    hintText: 'Selected Time', // Hint text
+                    border: const OutlineInputBorder(), // Border
+                    enabledBorder: const OutlineInputBorder(
+                      // Border when enabled
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
+                    focusedBorder: const OutlineInputBorder(
+                      // Border when focused
+                      borderSide:
+                          BorderSide(color: Color.fromARGB(255, 230, 168, 114)),
+                    ),
+                    labelStyle: const TextStyle(color: Colors.grey),
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.access_time),
+                      onPressed: _startTimePicker,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Need for (Hours)',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    const SizedBox(height: 5),
+                    TextField(
+                      controller: _needTimeController,
+                      maxLength: 50,
+                      decoration: const InputDecoration(
+                        hintText: 'Type here', // Hint text
+                        border: OutlineInputBorder(), // Border
+                        enabledBorder: OutlineInputBorder(
+                          // Border when enabled
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          // Border when focused
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 230, 168, 114)),
+                        ),
+                        labelStyle:
+                            TextStyle(color: Colors.grey), // Label text color
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                const SizedBox(
+                  height: 40,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    AFButton(
+                        type: ButtonType.secondary,
+                        fontSize: Constants.multiplier * 1.7,
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        text: Strings.cancel),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    AFButton(
+                        type: ButtonType.primary,
+                        fontSize: Constants.multiplier * 1.7,
+                        onPressed: _submitReservationData,
+                        text: Strings.save)
+                  ],
+                ),
+              ]),
+            ],
+          ),
+        ),
       ),
     );
   }
