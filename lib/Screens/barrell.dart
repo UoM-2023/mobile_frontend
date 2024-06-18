@@ -1,5 +1,5 @@
 export './Bills.dart';
-export './community.dart';
+export 'community_chat/community.dart';
 export './dashboard.dart';
 export './guests.dart';
 

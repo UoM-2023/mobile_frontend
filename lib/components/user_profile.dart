@@ -31,27 +31,34 @@ class UserProfileWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 15),
-          buildDetail('Tel No:', phoneNumber),
-          buildDetail('Unit No:', houseNumber),
-          buildDetail('Block No:', blockNumber),
-          buildDetail('Building No:', buildingName),
+          buildDetailRow('Tel No:', phoneNumber),
+          buildDetailRow('Unit No:', houseNumber),
+          buildDetailRow('Block No:', blockNumber),
+          buildDetailRow('Building No:', buildingName),
         ],
       ),
     );
   }
 
-  Widget buildDetail(String label, String value) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+  Widget buildDetailRow(String label, String value) {
+    return Row(
       children: [
         Text(
-          '$label $value',
+          label,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 12,
           ),
         ),
-        const SizedBox(height: 1),
+        const SizedBox(width: 5),
+        Expanded(
+          child: Text(
+            value,
+            style: const TextStyle(
+              fontSize: 12,
+            ),
+          ),
+        ),
       ],
     );
   }

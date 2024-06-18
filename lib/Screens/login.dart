@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: library_private_types_in_public_api
 
 import 'package:apartflow_mobile_app/util/barrell.dart';
 import 'package:apartflow_mobile_app/widgets/buttons/barrell.dart';
@@ -8,16 +8,46 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:apartflow_mobile_app/Screens/barrell.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
-//text editing controllers
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
+
+  //text editing controllers
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
-//sign user in
-  // ignore: non_constant_identifier_names
-  void LogUserIn() {}
+  String? _validateUsername(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your username';
+    }
+    return null;
+  }
+
+  String? _validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your password';
+    }
+    return null;
+  }
+
+  void _submitForm() {
+    if (_formKey.currentState!.validate()) {
+      String username = usernameController.text;
+      String password = passwordController.text;
+
+      // Implement your login logic here
+      print('Logging in with username: $username, password: $password');
+    }
+  }
+
+  void logUserIn() {}
+
   void resetPassword() {}
 
   void contactUs() {}
@@ -25,109 +55,114 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: Constants.primaryBackgroundColor,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
-        child: Column(
+        child: Form(
+          key: _formKey,
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
-              SizedBox(height: 70),
+              const SizedBox(height: 70),
               //login text
-
               Text(
-                'Log in',
+                Strings.login,
                 style: GoogleFonts.lato(
-                  color: Colors.black,
+                  color: Constants.secondaryTextColor,
                   fontSize: 35,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
 
-              //username textfield
-              MyTextField(
+              LogInTextField(
                 controller: usernameController,
                 hintText: 'Username',
                 obscureText: false,
                 iconData: Icons.person,
-                //iconImagePath: 'assets/User_light.png',
+                validator: _validateUsername,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               //password textfield
-              MyTextField(
+              LogInTextField(
                 controller: passwordController,
                 hintText: 'Password',
                 obscureText: true,
                 iconData: Icons.lock,
+                validator: _validatePassword,
               ),
-              SizedBox(height: 25),
+              const SizedBox(height: 25),
 
               AFButton(
-                  type: ButtonType.primary,
-                  shadow: true,
-                  onPressed: () {
-                    // After successful login
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => DashboardScreen()),
-                    );
-                  },
-                  text: Strings.login,
-                  paddingX: (MediaQuery.of(context).size.width / 3)),
+                type: ButtonType.primary,
+                shadow: true,
+                onPressed: () {
+                  _submitForm();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const DashboardScreen()),
+                  );
+                },
+                text: Strings.login,
+                paddingX: (MediaQuery.of(context).size.width / 3),
+              ),
 
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               //reset password
               ResetPasswordButton(
                 onPressed: resetPassword,
               ),
 
-              SizedBox(height: 5),
-              LineWidget(),
-              SizedBox(height: 80),
+              const SizedBox(height: 5),
+              const LineWidget(),
+              const SizedBox(height: 80),
               //contact us
               Text(
                 'Need any help?',
                 style: GoogleFonts.lato(
-                  color: Color.fromARGB(120, 0, 0, 0),
+                  color: Constants.shadowColor,
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 25),
+              const SizedBox(height: 25),
 
               AFButton(
-                  type: ButtonType.faded,
-                  shadow: true,
-                  onPressed: contactUs,
-                  text: Strings.contactUs,
-                  icon: Icons.call,
-                  paddingX: (MediaQuery.of(context).size.width / 12)),
+                type: ButtonType.faded,
+                shadow: true,
+                onPressed: contactUs,
+                text: Strings.contactUs,
+                icon: Icons.call,
+                paddingX: (MediaQuery.of(context).size.width / 12),
+              ),
 
-              SizedBox(
+              const SizedBox(
                 height: 39,
               ),
-              //or continue with
+
               _buildBottom(),
-              //not a member?register now
-            ]),
+            ],
+          ),
+        ),
       ),
     );
   }
-}
 
-Widget _buildBottom() {
-  return Expanded(
-    child: SizedBox(
-      height: 10,
-      child: ClipPath(
-        clipper: MyClipper(), // Custom clipper for the shape
-        child: Container(
-          color: const Color.fromARGB(242, 230, 95, 43),
+  Widget _buildBottom() {
+    return Expanded(
+      child: SizedBox(
+        height: 10,
+        child: ClipPath(
+          clipper: MyClipper(), // Custom clipper for the shape
+          child: Container(
+            color: Constants.primaryColor,
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 class MyClipper extends CustomClipper<Path> {
@@ -158,12 +193,14 @@ class MyClipper extends CustomClipper<Path> {
 }
 
 class LineWidget extends StatelessWidget {
+  const LineWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 2,
-      color: Color(0x5E000000), // Change the color of the line
-      margin: EdgeInsets.symmetric(horizontal: 20),
+      color: Constants.shadowColor, // Change the color of the line
+      margin: const EdgeInsets.symmetric(horizontal: 20),
     );
   }
 }

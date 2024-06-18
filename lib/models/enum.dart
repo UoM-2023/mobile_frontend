@@ -1,7 +1,7 @@
 
+import 'package:flutter/material.dart';
 
-
-enum MaintenanceCategory{
+enum MaintenanceCategories{
   Plumbing,
   Electrical,
   HVAC,
@@ -10,9 +10,12 @@ enum MaintenanceCategory{
   Pest_Control,
   Safety_and_Security,
   Grounds_keeping,
-  Structural_Repairs, hintText,
+  Structural_Repairs,
   
 }
+
+
+
 
 enum AmenityType {
   CommunityRoom,

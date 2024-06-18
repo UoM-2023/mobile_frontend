@@ -1,52 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:apartflow_mobile_app/widgets/maintenance_widgets/maintenances_list/maintenance_list.dart';
 import 'package:apartflow_mobile_app/models/maintenance.dart';
 import 'package:apartflow_mobile_app/widgets/maintenance_widgets/new_maintenance.dart';
-import 'package:apartflow_mobile_app/models/enum.dart';
+
 
 import '../widgets/bottomnavigationbar.dart';
+import '../widgets/maintenance_widgets/maintenances_list/maintenance_item.dart';
 
 class Maintenances extends StatefulWidget {
   
   const Maintenances({super.key});
   @override
-  State<Maintenances> createState() {
-    return _MaintenancesState();
-  }
+  State<Maintenances> createState() => _MaintenancesState();
 }
 
-//dummy data
+
 class _MaintenancesState extends State<Maintenances> {
   int _selectedIndex = 0;
-  final List<Maintenance> _registeredMaintenances = [
-    Maintenance(
-      description: 'Dimming Lights',
-      date: DateTime.now(),
-      category: MaintenanceCategory.Electrical,
-    ),
-    Maintenance(
-      description: 'Gurgling Sound from Drain',
-      date: DateTime.now(),
-      category: MaintenanceCategory.Plumbing,
-    )
-  ];
+  List<Maintenance> _registeredMaintenances = [];
+  bool _isLoading = true;
+  String? _errorMessage;
 
-//open the form after pressing plus button
-  _openAddMaintenanceOverlay() {
-//build in function for forms
-    showModalBottomSheet(
-      //to make sure that the keyboard doesn't overlap over input fields
-      isScrollControlled: true,
-      context: context,
-      builder: (ctx) => NewMaintenance(onAddMaintenance: _addMaintenance),
-    );
+   @override
+  void initState() {
+    super.initState();
+    _fetchMaintenanceData();
   }
 
-  void _addMaintenance(Maintenance maintenance) {
-    //add a new item to the list
-    setState(() {
-      _registeredMaintenances.add(maintenance);
-    });
+  Future<void> _fetchMaintenanceData() async {
+    String unitID = 'A-101';
+    try {
+      List<Maintenance> maintenances = await Maintenance.fetchMaintenanceList(unitID);
+      print('Fetched maintenances: $maintenances');
+      setState(() {
+        _registeredMaintenances = maintenances;
+        _isLoading = false;
+      });
+    } catch (error) {
+      print('Error in _fetchMaintenanceData: $error');
+      setState(() {
+        _errorMessage = 'Failed to load data: $error';
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _openAddMaintenanceOverlay() async {
+    // Await the result from the NewMaintenance screen
+    final result = await showModalBottomSheet<bool>(
+      isScrollControlled: true,
+      context: context,
+      builder: (ctx) => const NewMaintenance(),
+    );
+
+  // If the result is true, refresh the list of maintenance requests
+    if (result == true) {
+      _fetchMaintenanceData();
+    }
   }
 
   @override
@@ -70,47 +79,19 @@ class _MaintenancesState extends State<Maintenances> {
                     color: Colors.white,
                   )),
             ]),
-        body: Container(
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-            ),
-          ),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 30,
-              ),
-
-              const Row(children: [
-                SizedBox(width: 10),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'New',
-                    style: TextStyle(
-                      fontSize: 15,
-                    ),
-                  ),
-                )
-              ]),
-              const SizedBox(
-                height: 20,
-              ),
-              Expanded(
-                
-                  //new maintenance list
-                  child:
-                      MaintenancesList(maintenances: _registeredMaintenances)),
-
-              const Text('Earlier'),
-              //earlier maintenance list
-              const Expanded(child: Text('Earlier maintenance requests')),
-            ],
-          ),
-        ),
+        body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : _errorMessage != null
+              ? Center(child: Text(_errorMessage!))
+              : _registeredMaintenances.isEmpty
+                  ? const Center(child: Text('You have no maintenance requests yet'))
+              : ListView.builder(
+                  itemCount: _registeredMaintenances.length,
+                  itemBuilder: (context, index) {
+                    final reversedIndex = _registeredMaintenances.length - 1 - index;
+                    return MaintenanceItem(_registeredMaintenances[reversedIndex]);
+                  },
+                ),
         bottomNavigationBar: NavigationMenu(selectedIndex: _selectedIndex,
               onItemTapped: (index) {
                 setState(() {

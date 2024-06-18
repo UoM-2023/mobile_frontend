@@ -1,9 +1,8 @@
 import 'package:apartflow_mobile_app/Screens/barrell.dart';
-import 'package:apartflow_mobile_app/util/constants.dart';
 import 'package:apartflow_mobile_app/widgets/bottomnavigationbar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:apartflow_mobile_app/widgets/components/user_profile.dart';
+import 'package:apartflow_mobile_app/components/user_profile.dart';
 import 'package:apartflow_mobile_app/util/barrell.dart';
 import 'package:apartflow_mobile_app/widgets/buttons/barrell.dart';
 
@@ -20,15 +19,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: Constants.primaryBackgroundColor,
       body: Stack(
         children: [
           Positioned.fill(
             child: Column(
               children: [
+                //top container
                 Container(
                   decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 234, 114, 70),
+                      color: Constants.primaryColor,
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(40),
                         bottomRight: Radius.circular(40),
@@ -48,7 +48,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           Text(
                             'ApartFlow',
                             style: GoogleFonts.lato(
-                              color: const Color.fromARGB(201, 255, 255, 255),
+                              color: Constants.shadedTextColor,
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                             ),
@@ -57,11 +57,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             flex: 1,
                           ),
                           IconButton(
-                              color: const Color.fromARGB(201, 255, 255, 255),
+                              color: Constants.shadedTextColor,
                               onPressed: () {},
                               icon: const Icon(Icons.notifications)),
                           IconButton(
-                              color: const Color.fromARGB(201, 255, 255, 255),
+                              color: Constants.shadedTextColor,
                               onPressed: () {},
                               icon: const Icon(Icons.logout))
                         ],
@@ -72,7 +72,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 Expanded(
                   child: Container(
                     decoration: const BoxDecoration(
-                      color: Colors.white,
+                      color: Constants.primaryBackgroundColor,
                     ),
                     child: Center(
                       child: Column(
@@ -95,9 +95,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             fontSize: null,
                           ),
                           const SizedBox(height: 10),
-                          DashboardButton(
+                         DashboardButton(
                             title: 'Guests',
-                            icon: Icons.people,
+                            icon: Icons.build,
                             iconColor: Colors.green,
                             onPressed: () {
                               Navigator.push(
@@ -161,7 +161,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black
-                          .withOpacity(0.2), // Transparent black color
+                          .withOpacity(0.2), 
                       spreadRadius: 1, // Spread radius
                       blurRadius: 2, // Blur radius
                       offset: const Offset(0, 2), // Shadow offset
@@ -170,8 +170,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   color: const Color.fromRGBO(255, 255, 255, 0.8),
                   border: Border.all(
                     color: Colors.black
-                        .withOpacity(0.5), // Transparent black color
-                    width: 0.1, // Border width
+                        .withOpacity(0.5), 
+                    width: 0.1, 
                   ),
                 ),
 
@@ -189,7 +189,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       width: Constants.multiplier * 10,
                       //color: Colors.red,
                       child: const CircleAvatar(
-                        radius: 50, // Adjust the size as needed
+                        radius: 50, 
                         backgroundImage: AssetImage('assets/images/person.jpg'),
                       ),
                     ),
@@ -213,8 +213,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
           ),
-
-   Positioned(
+          Positioned(
             left: 0,
             right: 0,
             bottom: 0,
@@ -227,7 +226,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
               },
             ),
           ),
-
         ],
       ),
     );

@@ -60,8 +60,8 @@ class ServiceItem extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(description),
-                  Text(formattedDateOrStartDate),
+                  Expanded(child: Text(description)),
+                  Expanded(child: Text(formattedDateOrStartDate)),
                   if (formattedEndDate != null) Text(formattedEndDate!),
                   if (additionalText != null) Text(additionalText!),
                 ],

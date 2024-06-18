@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "892831294723",
+    "project_id": "flutter-groupchat-84464",
+    "storage_bucket": "flutter-groupchat-84464.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:892831294723:android:eaa2c7d2d9f5eb1532f536",
+        "android_client_info": {
+          "package_name": "com.example.apartflow_mobile_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfwzQG7f_U14E-HK0is2Gt2PgTseWSrQc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

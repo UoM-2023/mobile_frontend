@@ -2,7 +2,7 @@ import 'package:apartflow_mobile_app/Screens/dashboard.dart';
 import 'package:apartflow_mobile_app/util/barrell.dart';
 import 'package:flutter/material.dart';
 
-import 'package:apartflow_mobile_app/Screens/community.dart';
+import 'package:apartflow_mobile_app/Screens/community_chat/community.dart';
 
 import '../Screens/Bills.dart';
 
