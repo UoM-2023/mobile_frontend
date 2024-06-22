@@ -44,7 +44,7 @@ class _NewMaintenanceState extends State<NewMaintenance> {
     if (_formKey.currentState!.validate()) {
       try {
         final response = await http.post(
-          Uri.parse('http://169.254.16.21:3001/maintenance/New_Mnt_Req'),
+          Uri.parse('http://169.254.215.55:3001/maintenance/New_Mnt_Req'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },

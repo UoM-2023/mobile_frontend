@@ -11,7 +11,7 @@ enum MaintenanceCategories{
   Safety_and_Security,
   Grounds_keeping,
   Structural_Repairs,
-  
+  Other,
 }
 
 

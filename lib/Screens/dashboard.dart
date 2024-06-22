@@ -100,12 +100,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             icon: Icons.build,
                             iconColor: Colors.green,
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const Guests(),
-                                ),
-                              );
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => const Guests(),
+                              //   ),
+                              // );
                             },
                             fontSize: null,
                           ),
@@ -115,12 +115,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             icon: Icons.calendar_today,
                             iconColor: Colors.yellow,
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const Reservations(),
-                                ),
-                              );
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => const Reservations(),
+                              //   ),
+                              // );
                             },
                             fontSize: null,
                           ),
@@ -130,12 +130,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             icon: Icons.thumb_up,
                             iconColor: Colors.red,
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const Supports(),
-                                ),
-                              );
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => const Supports(),
+                              //   ),
+                              // );
                             },
                             fontSize: null,
                           ),

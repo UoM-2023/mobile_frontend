@@ -1,11 +1,9 @@
-// ignore_for_file: library_private_types_in_public_api
-
+import 'package:apartflow_mobile_app/auth_service.dart';
 import 'package:apartflow_mobile_app/util/barrell.dart';
 import 'package:apartflow_mobile_app/widgets/buttons/barrell.dart';
 import 'package:apartflow_mobile_app/widgets/login_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:apartflow_mobile_app/Screens/barrell.dart';
 
 class LoginPage extends StatefulWidget {
@@ -18,9 +16,11 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
-  //text editing controllers
-  final usernameController = TextEditingController();
+  // Text editing controllers
+  final userIDController = TextEditingController();
   final passwordController = TextEditingController();
+
+  final AuthService _authService = AuthService(); // Initialize AuthService
 
   String? _validateUsername(String? value) {
     if (value == null || value.isEmpty) {
@@ -36,21 +36,48 @@ class _LoginPageState extends State<LoginPage> {
     return null;
   }
 
-  void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      String username = usernameController.text;
-      String password = passwordController.text;
+  Future<void> _submitForm() async {
+  if (_formKey.currentState!.validate()) {
+    String? userID = userIDController.text.trim();
+    String? password = passwordController.text.trim();
 
-      // Implement your login logic here
-      print('Logging in with username: $username, password: $password');
+    if (userID != null && password != null) {
+      try {
+        print('Logging in with UserID: $userID');
+        await _authService.login(userID, password);
+        print('Login successful');
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const DashboardScreen()),
+        );
+      } catch (e) {
+        print('Error during login: $e');
+        if (context != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Login failed: $e')),
+          );
+        } else {
+          print('Context is null');
+        }
+      }
+    } else {
+      print('UserID or password is null');
     }
   }
+ 
+}
 
-  void logUserIn() {}
 
-  void resetPassword() {}
 
-  void contactUs() {}
+
+
+  void resetPassword() {
+    // Implement reset password functionality
+  }
+
+  void contactUs() {
+    // Implement contact us functionality
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisSize: MainAxisSize.max,
             children: [
               const SizedBox(height: 70),
-              //login text
+              // login text
               Text(
                 Strings.login,
                 style: GoogleFonts.lato(
@@ -75,16 +102,14 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 40),
-
               LogInTextField(
-                controller: usernameController,
+                controller: userIDController,
                 hintText: 'Username',
                 obscureText: false,
                 iconData: Icons.person,
                 validator: _validateUsername,
               ),
               const SizedBox(height: 20),
-              //password textfield
               LogInTextField(
                 controller: passwordController,
                 hintText: 'Password',
@@ -93,32 +118,20 @@ class _LoginPageState extends State<LoginPage> {
                 validator: _validatePassword,
               ),
               const SizedBox(height: 25),
-
               AFButton(
                 type: ButtonType.primary,
                 shadow: true,
-                onPressed: () {
-                  _submitForm();
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const DashboardScreen()),
-                  );
-                },
+                onPressed: _submitForm,
                 text: Strings.login,
                 paddingX: (MediaQuery.of(context).size.width / 3),
               ),
-
               const SizedBox(height: 12),
-              //reset password
               ResetPasswordButton(
                 onPressed: resetPassword,
               ),
-
               const SizedBox(height: 5),
               const LineWidget(),
               const SizedBox(height: 80),
-              //contact us
               Text(
                 'Need any help?',
                 style: GoogleFonts.lato(
@@ -128,7 +141,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 25),
-
               AFButton(
                 type: ButtonType.faded,
                 shadow: true,
@@ -137,11 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                 icon: Icons.call,
                 paddingX: (MediaQuery.of(context).size.width / 12),
               ),
-
-              const SizedBox(
-                height: 39,
-              ),
-
+              const SizedBox(height: 39),
               _buildBottom(),
             ],
           ),
@@ -171,14 +179,12 @@ class MyClipper extends CustomClipper<Path> {
     Path path = Path();
 
     path.moveTo(0, 0);
-
     path.quadraticBezierTo(
       size.width * 0.5,
       size.height * 0.8,
       size.width,
       0,
     );
-
     path.lineTo(size.width, 0);
     path.lineTo(size.width, size.height);
     path.lineTo(0, size.height);
