@@ -6,5 +6,6 @@
     "lato",
     "RGBO",
     "Supportcategory"
-  ]
+  ],
+  "java.configuration.updateBuildConfiguration": "interactive"
 }
