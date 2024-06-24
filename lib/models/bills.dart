@@ -24,7 +24,7 @@ class Finance {
   }
 
   static Future<Finance> fetchFinanceData(String unitID) async {
-    final url = 'http://192.168.1.100:3001/finance/getAUserCharge/$unitID';
+    final url = 'https://e8ba-2402-4000-21c2-e188-ad0b-f674-765d-4395.ngrok-free.app/finance/getAUserCharge/$unitID';
     print('Fetching finance data from $url');
 
     try {
