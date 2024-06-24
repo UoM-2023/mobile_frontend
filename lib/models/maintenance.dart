@@ -38,7 +38,7 @@ class Maintenance {
 
   static Future<List<Maintenance>> fetchMaintenanceList(String _unitID) async {
     
-    final url = 'http://169.254.16.21:3001/maintenance/New_Mnt_Req_By_User/$_unitID';
+    final url = 'http://192.168.8.102:3001/maintenance/New_Mnt_Req_By_User/$_unitID';
     print('Fetching maintenance list from $url');
 
     try {

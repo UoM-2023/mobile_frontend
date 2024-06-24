@@ -18,7 +18,7 @@ class PaymentHistory extends StatelessWidget {
         leading: IconButton(
           onPressed: () {
             Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => const Bills()));
+                .push(MaterialPageRoute(builder: (context) => const FinancePage()));
           },
           icon: const Icon(Icons.arrow_back),
         ),

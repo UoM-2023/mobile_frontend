@@ -50,7 +50,7 @@ class NavigationMenu extends StatelessWidget {
             // Navigate to Bills page
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Bills()),
+              MaterialPageRoute(builder: (context) => FinancePage()),
             );
             break;
           case 2:
