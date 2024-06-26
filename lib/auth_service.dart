@@ -43,6 +43,8 @@ class AuthService {
 }
 
 
+
+
   Future<void> logout() async {
     try {
       final prefs = await SharedPreferences.getInstance();

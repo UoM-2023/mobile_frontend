@@ -13,6 +13,7 @@ class User {
   final String email;
   final String mobileNo;
   final String address;
+  final String nameWithInitials;
 
   User({
     required this.userId,
@@ -26,6 +27,7 @@ class User {
     required this.email,
     required this.mobileNo,
     required this.address,
+    required this.nameWithInitials,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -41,28 +43,24 @@ class User {
       email: json['email'],
       mobileNo: json['mobile_no'],
       address: json['Address'],
+      nameWithInitials: json['name_with_initials'],
     );
   }
 
   static Future<User> fetchUserDetails(String userId) async {
-    print("User Id called to user details: $userId");
-    // final url = 'http://192.168.8.102:3001/residentsDetails/getResidentInfo/$userId';
-    // print("URL: $url");
     try {
       final response = await http.get(
-      Uri.parse('https://e8ba-2402-4000-21c2-e188-ad0b-f674-765d-4395.ngrok-free.app/residentsDetails/getResidentInfo/$userId')
-    );
+          Uri.parse('https://169.254.215.55:3001/residentsDetails/getResidentInfo/$userId'));
 
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> data = json.decode(response.body)['result'][0];
-      return User.fromJson(data);
-    } else {
-      throw Exception('Failed to load user details');
-    }
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body)['result'][0];
+        return User.fromJson(data);
+      } else {
+        throw Exception('Failed to load user details');
+      }
     } catch (error) {
       print('Failed to load user details: $error');
       throw Exception('Failed to load user details $error');
     }
-    
   }
 }

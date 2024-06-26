@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:apartflow_mobile_app/global.dart';
 import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
@@ -27,10 +28,10 @@ class Maintenance {
     print('called maintenance');
     return Maintenance(
       id: uuid.v4(),
-      category: json['MType'] as String,
-      description: json['M_Description'] as String,
-      date: json['requested_date'] as String,
-      status:json['Mnt_Status'] as String,
+      category: json['MType'] as String? ?? 'Unknown Category',
+      description: json['M_Description'] as String? ?? 'No Description',
+      date: json['requested_date'] as String? ?? 'Unknown Date',
+      status: json['Mnt_Status'] as String? ?? 'Unknown Status',
       
     );
     
@@ -38,7 +39,7 @@ class Maintenance {
 
   static Future<List<Maintenance>> fetchMaintenanceList(String _unitID) async {
     
-    final url = 'http://169.254.215.55:3001/maintenance/New_Mnt_Req_By_User/$_unitID';
+    final url = 'http://${baseurl}/maintenance/New_Mnt_Req_By_User/$_unitID';
     print('Fetching maintenance list from $url');
 
     try {

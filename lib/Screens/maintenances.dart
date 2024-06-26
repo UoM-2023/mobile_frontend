@@ -4,7 +4,7 @@ import 'package:apartflow_mobile_app/widgets/maintenance_widgets/new_maintenance
 
 
 import '../widgets/bottomnavigationbar.dart';
-import '../widgets/maintenance_widgets/maintenances_list/maintenance_item.dart';
+import '../widgets/maintenance_widgets/maintenance_item.dart';
 
 class Maintenances extends StatefulWidget {
   

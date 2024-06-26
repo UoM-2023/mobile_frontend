@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:apartflow_mobile_app/global.dart';
+import 'package:apartflow_mobile_app/models/userDetails.dart';
 import 'package:apartflow_mobile_app/util/barrell.dart';
 import 'package:flutter/material.dart';
 //import 'package:apartflow_mobile_app/models/maintenance.dart';
@@ -18,9 +20,8 @@ class _NewMaintenanceState extends State<NewMaintenance> {
   final _formKey = GlobalKey<FormState>();
   final _descriptionController = TextEditingController();
   String? _selectedCategory;
-  // Temporary hardcoded values
-  final String _unitID = "A-101"; // Replace with dynamic data when available
-  final String _residentName = "John Doe"; // Replace with dynamic data when available
+   String _unitID = ''; // Replace with dynamic data when available
+   String _residentName = ''; // Replace with dynamic data when available
 
   final List<String> _items = [
     'Plumbing',
@@ -34,6 +35,27 @@ class _NewMaintenanceState extends State<NewMaintenance> {
     'Structural Repairs'
   ];
 
+
+@override
+  void initState() {
+    super.initState();
+    _fetchUserDetails(); // Fetch user details when the widget initializes
+  }
+
+  Future<void> _fetchUserDetails() async {
+    try {
+      String userId = 'AP0001R'; // Hardcoded user ID
+      print('Fetching details for userID: $userId');
+      User user = await User.fetchUserDetails(userId); // Fetch user details using hardcoded user ID
+      setState(() {
+        _unitID = user.unitId;
+        _residentName = user.nameWithInitials;
+        print('Fetched user details: _unitID=$_unitID, _residentName=$_residentName');
+      });
+    } catch (error) {
+      print('Error fetching user details: $error');
+    }
+  }
   @override
   void dispose() {
     _descriptionController.dispose();
@@ -43,8 +65,9 @@ class _NewMaintenanceState extends State<NewMaintenance> {
   Future<void> _submitMaintenanceData(String description, String category) async {
     if (_formKey.currentState!.validate()) {
       try {
+        print('Submitting maintenance data: _unitID=$_unitID, _residentName=$_residentName');
         final response = await http.post(
-          Uri.parse('http://169.254.215.55:3001/maintenance/New_Mnt_Req'),
+          Uri.parse('http://${baseurl}/maintenance/New_Mnt_Req'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -52,7 +75,8 @@ class _NewMaintenanceState extends State<NewMaintenance> {
             'Unit_id': _unitID, // Include unit ID in the request body
             'Resident_Name': _residentName, // Include resident name in the request body
             'MType': category,
-            'M_Description': description, // Include description
+            'M_Description': description,
+            'Mnt_Status' : 'Pending', // Include description
           }),
         );
 

@@ -1,8 +1,9 @@
 import 'package:apartflow_mobile_app/Screens/barrell.dart';
+import 'package:apartflow_mobile_app/Screens/notifications.dart';
 import 'package:apartflow_mobile_app/widgets/bottomnavigationbar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:apartflow_mobile_app/components/user_profile.dart';
+//import 'package:apartflow_mobile_app/components/user_profile.dart';
 import 'package:apartflow_mobile_app/util/barrell.dart';
 import 'package:apartflow_mobile_app/widgets/buttons/barrell.dart';
 
@@ -58,7 +59,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ),
                           IconButton(
                               color: Constants.shadedTextColor,
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                 context,
+                                MaterialPageRoute(builder: (context) => const NotificationsPage()),
+                                );
+                              },
                               icon: const Icon(Icons.notifications)),
                           IconButton(
                               color: Constants.shadedTextColor,
@@ -199,13 +205,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     const SizedBox(
                       width: Constants.multiplier * 21,
                       //color: Colors.green,
-                      child: UserProfileWidget(
-                        name: 'John Doe',
-                        phoneNumber: '123-456-7890',
-                        houseNumber: '1234',
-                        blockNumber: 'Block A',
-                        buildingName: 'ABC Towers',
-                      ),
+                      // child: UserProfileWidget(
+                      //   name: 'John Doe',
+                      //   phoneNumber: '123-456-7890',
+                      //   houseNumber: '1234',
+                      //   blockNumber: 'Block A',
+                      //   buildingName: 'ABC Towers',
+                      // ),
                     ),
                   ],
                 ),

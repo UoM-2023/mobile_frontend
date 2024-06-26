@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:apartflow_mobile_app/models/maintenance.dart';
 import 'package:intl/intl.dart';
-import '../../service_item.dart';
+import '../service_item.dart';
 
 
 
