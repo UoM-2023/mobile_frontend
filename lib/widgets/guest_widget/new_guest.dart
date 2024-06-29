@@ -1,15 +1,19 @@
+import 'package:apartflow_mobile_app/global.dart';
+import 'package:apartflow_mobile_app/models/userDetails.dart';
 import 'package:apartflow_mobile_app/util/barrell.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../models/guest.dart';
 import '../buttons/af_button.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final formatter = DateFormat.yMd();
 
 class NewGuest extends StatefulWidget {
-  const NewGuest({Key? key, required this.onAddGuest}) : super(key: key);
+  const NewGuest({super.key});
 
-  final void Function(dynamic guest) onAddGuest;
+  
 
   @override
   State<NewGuest> createState() => _NewGuestState();
@@ -21,6 +25,31 @@ class _NewGuestState extends State<NewGuest> {
   final _nameController = TextEditingController();
   final _nicController = TextEditingController();
   final _vehicleNOController = TextEditingController();
+User? _user;
+
+@override
+  void initState() {
+    super.initState();
+    _fetchUserDetails(); // Fetch user details when the widget initializes
+  }
+    Future<void> _fetchUserDetails() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? userId = prefs.getString('userId');
+
+      if (userId != null) {
+        print('Fetching details for userID: $userId');
+        User user = await User.fetchUserDetails(userId); // Fetch user details using the user ID
+        setState(() {
+          _user = user;
+        });
+      } else {
+        print('User ID not found.');
+      }
+    } catch (error) {
+      print('Error fetching user details: $error');
+    }
+  }
 
   @override
   void dispose() {
@@ -47,16 +76,92 @@ class _NewGuestState extends State<NewGuest> {
     }
   }
 
-  void _submitGuestData() {
+ Future<void> _submitGuestData(String name,  String nic,String vehicleNo,DateTime arrivalDate ) async {
     if (_formKey.currentState!.validate()) {
-      widget.onAddGuest(Guest(
-        name: _nameController.text,
-        vehicle_NO: _vehicleNOController.text,
-        nic: _nicController.text,
-        date: _selectedArrivalDate!,
-      ));
-      Navigator.pop(context);
+      try {
+       
+        final response = await http.post(
+          Uri.parse('http://${baseurl}/GuestDetail/GuestDetails'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{
+            'unit_ID': _user!.unitId, // Include unit ID in the request body
+            'guest_name': name, 
+            'guest_NIC': nic,
+            'vehicle_number': vehicleNo,
+            'arrival_date': _selectedArrivalDate!.toIso8601String(),
+          }),
+        );
+
+        if (response.statusCode == 200) {
+          // Handle success response
+          print('Guest information added successfully');
+          // Show success dialog
+          await showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Success'),
+                content: Text('Your request has been added successfully.'),
+                actions: <Widget>[
+                  TextButton(
+                    child: Text('OK'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+          if(!context.mounted){
+            return;
+          }
+          Navigator.of(context).pop(true);
+        } else {
+          // Handle error response
+          print('Failed to add guest information. Status code: ${response.statusCode}');
+          print('Response body: ${response.body}');
+        }
+      } catch (error) {
+        // Handle any exceptions
+        print('Error: $error');
+      }
     }
+  }
+
+  void _showConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirm'),
+          content: Text('Are you sure you want to add this request?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                _submitGuestData(
+                  _nameController.text,
+                  _nicController.text,
+                  _vehicleNOController.text,
+                _selectedArrivalDate!,
+                   // Pass the selected category or an empty string if it's null
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -213,7 +318,7 @@ class _NewGuestState extends State<NewGuest> {
                     AFButton(
                       type: ButtonType.primary,
                       fontSize: Constants.multiplier * 1.7,
-                      onPressed: _submitGuestData,
+                      onPressed: _showConfirmationDialog,
                       text: Strings.save,
                     ),
                   ],

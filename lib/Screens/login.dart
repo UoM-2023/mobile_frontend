@@ -71,9 +71,6 @@ class _LoginPageState extends State<LoginPage> {
 
 
 
-  void resetPassword() {
-    // Implement reset password functionality
-  }
 
   void contactUs() {
     // Implement contact us functionality
@@ -125,11 +122,8 @@ class _LoginPageState extends State<LoginPage> {
                 text: Strings.login,
                 paddingX: (MediaQuery.of(context).size.width / 3),
               ),
-              const SizedBox(height: 12),
-              ResetPasswordButton(
-                onPressed: resetPassword,
-              ),
-              const SizedBox(height: 5),
+              
+              const SizedBox(height: 25),
               const LineWidget(),
               const SizedBox(height: 80),
               Text(

@@ -1,9 +1,9 @@
 import 'package:apartflow_mobile_app/Screens/barrell.dart';
-import 'package:apartflow_mobile_app/Screens/notifications.dart';
+import 'package:apartflow_mobile_app/components/userProfile.dart';
+import 'package:apartflow_mobile_app/models/userDetails.dart';
 import 'package:apartflow_mobile_app/widgets/bottomnavigationbar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-//import 'package:apartflow_mobile_app/components/user_profile.dart';
 import 'package:apartflow_mobile_app/util/barrell.dart';
 import 'package:apartflow_mobile_app/widgets/buttons/barrell.dart';
 
@@ -16,6 +16,26 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   int _selectedIndex = 0;
+  User? _user;
+
+ @override
+  void initState() {
+    super.initState();
+    _fetchProfileData();
+  }
+
+    Future<void> _fetchProfileData() async {
+    String userId = 'AP0001R';
+    try {
+      User user = await User.fetchUserDetails(userId);
+      setState(() {
+        _user = user;
+      });
+     
+    } catch (error) {
+      print('Error in _fetchUserDetails: $error');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,15 +77,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           const Spacer(
                             flex: 1,
                           ),
-                          IconButton(
-                              color: Constants.shadedTextColor,
-                              onPressed: () {
-                                Navigator.push(
-                                 context,
-                                MaterialPageRoute(builder: (context) => const NotificationsPage()),
-                                );
-                              },
-                              icon: const Icon(Icons.notifications)),
+                          
                           IconButton(
                               color: Constants.shadedTextColor,
                               onPressed: () {},
@@ -103,15 +115,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           const SizedBox(height: 10),
                          DashboardButton(
                             title: 'Guests',
-                            icon: Icons.build,
+                            icon: Icons.person,
                             iconColor: Colors.green,
                             onPressed: () {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) => const Guests(),
-                              //   ),
-                              // );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const Guests(),
+                                ),
+                              );
                             },
                             fontSize: null,
                           ),
@@ -182,39 +194,42 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
 
                 child: Row(
-                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(
-                        top: 0,
-                        left: 20,
-                        bottom: 20,
-                        right: 20,
-                      ),
-                      height: Constants.multiplier * 10,
-                      width: Constants.multiplier * 10,
-                      //color: Colors.red,
-                      child: const CircleAvatar(
-                        radius: 50, 
-                        backgroundImage: AssetImage('assets/images/person.jpg'),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    const SizedBox(
-                      width: Constants.multiplier * 21,
-                      //color: Colors.green,
-                      // child: UserProfileWidget(
-                      //   name: 'John Doe',
-                      //   phoneNumber: '123-456-7890',
-                      //   houseNumber: '1234',
-                      //   blockNumber: 'Block A',
-                      //   buildingName: 'ABC Towers',
-                      // ),
-                    ),
-                  ],
-                ),
+  children: [
+    Container(
+      margin: const EdgeInsets.only(
+        top: 0,
+        left: 20,
+        bottom: 20,
+        right: 20,
+      ),
+      height: Constants.multiplier * 10,
+      width: Constants.multiplier * 10,
+      child: const CircleAvatar(
+        radius: 50,
+        child: Icon(
+          Icons.person,  // You can choose a different icon if needed
+          size: 50,
+        ),
+      ),
+    ),
+    const SizedBox(
+      width: 5,
+    ),
+    SizedBox(
+      width: Constants.multiplier * 23,
+      child: Container(
+        
+        child: Userprofile(
+          name: _user!.nameWithInitials,
+          phoneNumber: _user!.mobileNo,
+          houseNumber: _user!.unitId,
+          residentID: _user!.residentId,
+        ),
+      ),
+    ),
+  ],
+),
+
                 //
               ),
             ),

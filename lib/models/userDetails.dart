@@ -50,7 +50,7 @@ class User {
   static Future<User> fetchUserDetails(String userId) async {
     try {
       final response = await http.get(
-          Uri.parse('https://169.254.215.55:3001/residentsDetails/getResidentInfo/$userId'));
+          Uri.parse('http://169.254.215.55:3001/residentsDetails/getResidentInfo/$userId'));
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body)['result'][0];

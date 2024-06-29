@@ -3,9 +3,9 @@ import 'package:apartflow_mobile_app/global.dart';
 import 'package:apartflow_mobile_app/models/userDetails.dart';
 import 'package:apartflow_mobile_app/util/barrell.dart';
 import 'package:flutter/material.dart';
-//import 'package:apartflow_mobile_app/models/maintenance.dart';
 import '../buttons/af_button.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NewMaintenance extends StatefulWidget {
   const NewMaintenance({super.key});
@@ -20,8 +20,8 @@ class _NewMaintenanceState extends State<NewMaintenance> {
   final _formKey = GlobalKey<FormState>();
   final _descriptionController = TextEditingController();
   String? _selectedCategory;
-   String _unitID = ''; // Replace with dynamic data when available
-   String _residentName = ''; // Replace with dynamic data when available
+  User? _user;
+   
 
   final List<String> _items = [
     'Plumbing',
@@ -42,16 +42,20 @@ class _NewMaintenanceState extends State<NewMaintenance> {
     _fetchUserDetails(); // Fetch user details when the widget initializes
   }
 
-  Future<void> _fetchUserDetails() async {
+   Future<void> _fetchUserDetails() async {
     try {
-      String userId = 'AP0001R'; // Hardcoded user ID
-      print('Fetching details for userID: $userId');
-      User user = await User.fetchUserDetails(userId); // Fetch user details using hardcoded user ID
-      setState(() {
-        _unitID = user.unitId;
-        _residentName = user.nameWithInitials;
-        print('Fetched user details: _unitID=$_unitID, _residentName=$_residentName');
-      });
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? userId = prefs.getString('userId');
+
+      if (userId != null) {
+        print('Fetching details for userID: $userId');
+        User user = await User.fetchUserDetails(userId); // Fetch user details using the user ID
+        setState(() {
+          _user = user;
+        });
+      } else {
+        print('User ID not found.');
+      }
     } catch (error) {
       print('Error fetching user details: $error');
     }
@@ -65,15 +69,14 @@ class _NewMaintenanceState extends State<NewMaintenance> {
   Future<void> _submitMaintenanceData(String description, String category) async {
     if (_formKey.currentState!.validate()) {
       try {
-        print('Submitting maintenance data: _unitID=$_unitID, _residentName=$_residentName');
+       
         final response = await http.post(
           Uri.parse('http://${baseurl}/maintenance/New_Mnt_Req'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(<String, String>{
-            'Unit_id': _unitID, // Include unit ID in the request body
-            'Resident_Name': _residentName, // Include resident name in the request body
+            'Unit_id': _user!.unitId, // Include unit ID in the request body
             'MType': category,
             'M_Description': description,
             'Mnt_Status' : 'Pending', // Include description
@@ -137,7 +140,9 @@ class _NewMaintenanceState extends State<NewMaintenance> {
                 Navigator.of(context).pop();
                 _submitMaintenanceData(
                   _descriptionController.text,
-                  _selectedCategory ?? '', // Pass the selected category or an empty string if it's null
+                  _selectedCategory ?? '',
+                  
+                   // Pass the selected category or an empty string if it's null
                 );
               },
             ),

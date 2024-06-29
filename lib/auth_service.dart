@@ -7,43 +7,47 @@ class AuthService {
   static const String baseUrl = 'http://169.254.215.55:3001/auth'; // Replace with your backend URL
 
   Future<void> login(String userId, String password) async {
-  final url = Uri.parse('$baseUrl/login');
+    final url = Uri.parse('$baseUrl/login');
 
-  final Map<String, String> body = {
-    'userID': userId,
-    'password': password,
-  };
+    final Map<String, String> body = {
+      'userID': userId,
+      'password': password,
+    };
 
-  final Map<String, String> headers = {
-    'Content-Type': 'application/json',
-  };
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+    };
 
-  print('Request Body: $body');
+    print('Request Body: $body');
 
-  final response = await http.post(
-    url,
-    headers: headers,
-    body: jsonEncode(body),
-  );
+    try {
+      final response = await http.post(
+        url,
+        headers: headers,
+        body: jsonEncode(body),
+      );
 
-  print('Response status: ${response.statusCode}');
-  print('Response body: ${response.body}');
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
 
-  if (response.statusCode == 200) {
-    final data = jsonDecode(response.body);
-    if (data.containsKey('token')) {
-      // Parse the token and extract user information if needed
-      return;
-    } else {
-      throw Exception('Invalid response from server');
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        String? token = data['token'];
+        String? userIdFromResponse = data['userId'];
+        
+        if (token != null && userIdFromResponse != null) {
+          await _saveToken(token, userIdFromResponse);
+        } else {
+          throw Exception('Token or userId is null');
+        }
+      } else {
+        throw Exception('Failed to login: ${response.body}');
+      }
+    } catch (e) {
+      print('Error during login: $e');
+      throw Exception('Failed to login: $e');
     }
-  } else {
-    throw Exception('Failed to login: ${response.body}');
   }
-}
-
-
-
 
   Future<void> logout() async {
     try {
@@ -63,7 +67,7 @@ class AuthService {
 
       if (response.statusCode == 200) {
         await prefs.remove('token');
-        await prefs.remove('UserId');
+        await prefs.remove('userId');
       } else {
         throw Exception('Failed to logout: ${response.body}');
       }
@@ -91,9 +95,14 @@ class AuthService {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        await prefs.setString('token', data['token']);
-        String userIdFromToken = JwtDecoder.decode(data['token'])['UserId'];
-        await prefs.setString('userId', userIdFromToken);
+        String? newToken = data['token'];
+        if (newToken != null) {
+          await prefs.setString('token', newToken);
+          String userIdFromToken = JwtDecoder.decode(newToken)['userId'];
+          await prefs.setString('userId', userIdFromToken);
+        } else {
+          throw Exception('New token is null');
+        }
       } else {
         throw Exception('Failed to refresh token: ${response.body}');
       }
@@ -106,5 +115,11 @@ class AuthService {
   Future<String?> getUserId() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('userId');
+  }
+
+  Future<void> _saveToken(String token, String userId) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('token', token);
+    await prefs.setString('userId', userId);
   }
 }
