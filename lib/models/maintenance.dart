@@ -7,15 +7,13 @@ import 'package:intl/intl.dart';
 final DateFormat formatter = DateFormat.yMd();
 const uuid = Uuid();
 
-
-
 class Maintenance {
   Maintenance({
-    required this. id,
+    required this.id,
     required this.description,
     required this.date,
     required this.category,
-    required this.status, 
+    required this.status,
   });
 
   final String id;
@@ -27,18 +25,15 @@ class Maintenance {
   factory Maintenance.fromJson(Map<String, dynamic> json) {
     print('called maintenance');
     return Maintenance(
-      id: uuid.v4(),
+      id: json['id'].toString(),
       category: json['MType'] as String? ?? 'Unknown Category',
       description: json['M_Description'] as String? ?? 'No Description',
       date: json['requested_date'] as String? ?? 'Unknown Date',
       status: json['Mnt_Status'] as String? ?? 'Unknown Status',
-      
     );
-    
   }
 
   static Future<List<Maintenance>> fetchMaintenanceList(String _unitID) async {
-    
     final url = '${baseurl}/maintenance/New_Mnt_Req_By_User/$_unitID';
     print('Fetching maintenance list from $url');
 
@@ -50,7 +45,7 @@ class Maintenance {
       if (response.statusCode == 200) {
         print("if called");
         Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-        List<dynamic> data = jsonResponse['result']; 
+        List<dynamic> data = jsonResponse['result'];
         if (data == null || data.isEmpty) {
           print('No maintenance data found.');
           return [];
@@ -68,7 +63,4 @@ class Maintenance {
       throw Exception('Error fetching maintenance data');
     }
   }
-
-  
-
 }

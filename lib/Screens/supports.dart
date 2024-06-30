@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:apartflow_mobile_app/models/support.dart';
-import 'package:apartflow_mobile_app/models/enum.dart';
+
 import '../widgets/bottomnavigationbar.dart';
 import '../widgets/support_widget.dart/new_support.dart';
 
@@ -85,7 +85,7 @@ Future<void> _fetchSupportData(String unitID) async {
       builder: (ctx) => const NewSupport(),
     );
 
-  // If the result is true, refresh the list of maintenance requests
+  
     if (result == true) {
       _fetchSupportData(_user!.unitId);
     }
