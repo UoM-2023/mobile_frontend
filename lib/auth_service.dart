@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 class AuthService {
-  static const String baseUrl = 'http://169.254.215.55:3001/auth'; // Replace with your backend URL
+  static const String baseUrl = 'http://192.168.1.102:3001/auth'; // Replace with your backend URL
 
   Future<void> login(String userId, String password) async {
   final url = Uri.parse('$baseUrl/login');
