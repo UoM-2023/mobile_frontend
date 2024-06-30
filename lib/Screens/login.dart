@@ -38,34 +38,51 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> _submitForm() async {
   if (_formKey.currentState!.validate()) {
-    String? userID = userIDController.text.trim();
-    String? password = passwordController.text.trim();
+    String userID = userIDController.text.trim();
+    String password = passwordController.text.trim();
 
-    if (userID != null && password != null) {
-      try {
-        print('Logging in with UserID: $userID');
-        await _authService.login(userID, password);
-        print('Login successful');
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const DashboardScreen()),
-        );
-      } catch (e) {
-        print('Error during login: $e');
-        if (context != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Login failed: $e')),
-          );
-        } else {
-          print('Context is null');
-        }
+    try {
+      print('Logging in with UserID: $userID');
+      await _authService.login(userID, password);
+      print('Login successful');
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const DashboardScreen()),
+      );
+    } catch (e) {
+      print('Error during login: $e');
+      String errorMessage = 'Login failed. Please try again.';
+
+      if (e.toString().contains('Invalid username')) {
+        errorMessage = 'Invalid username. Please try again.';
+      } else if (e.toString().contains('Invalid password')) {
+        errorMessage = 'Invalid password. Please try again.';
       }
-    } else {
-      print('UserID or password is null');
+
+      if (context != null) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Login Error'),
+              content: Text(errorMessage),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Close'),
+                ),
+              ],
+            );
+          },
+        );
+      }
     }
   }
- 
 }
+
+
 
 
 
