@@ -36,7 +36,7 @@ class Guest {
   }
 
   static Future<List<Guest>> fetchGuestList(String unitID) async {
-    final url = 'http://$baseurl/GuestDetail/GuestDetails_by_unit/$unitID';
+    final url = '$baseurl/GuestDetail/GuestDetails_by_unit/$unitID';
     print('Fetching guest list from $url');
 
     try {

@@ -34,7 +34,8 @@ class Userprofile extends StatelessWidget {
               'Phone Number: $phoneNumber',
               style: TextStyle(
                 fontSize: 12,
-                color: Colors.grey[700], // Use a slightly darker color for less emphasis
+                color: Colors.grey[700], 
+                fontWeight: FontWeight.bold,// Use a slightly darker color for less emphasis
               ),
             ),
             SizedBox(height: 4),
@@ -43,6 +44,7 @@ class Userprofile extends StatelessWidget {
               style: TextStyle(
                 fontSize: 12,
                 color: Colors.grey[700],
+                fontWeight: FontWeight.bold,
               ),
             ),
             SizedBox(height: 4),
@@ -51,6 +53,7 @@ class Userprofile extends StatelessWidget {
               style: TextStyle(
                 fontSize: 12,
                 color: Colors.grey[700],
+                fontWeight: FontWeight.bold,
               ),
             ),
           ],

@@ -1,10 +1,11 @@
 import 'dart:convert';
+import 'package:apartflow_mobile_app/global.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 class AuthService {
-  static const String baseUrl = 'http://169.254.215.55:3001/auth'; // Replace with your backend URL
+  static  String baseUrl = '$baseurl/auth'; // Replace with your backend URL
 
   Future<void> login(String userId, String password) async {
     final url = Uri.parse('$baseUrl/login');
@@ -49,7 +50,7 @@ class AuthService {
     }
   }
 
-  Future<void> logout() async {
+   Future<void> logout() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
@@ -121,5 +122,10 @@ class AuthService {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', token);
     await prefs.setString('userId', userId);
+  }
+  Future<void> clearUserDetails() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('token');
+    await prefs.remove('userId');
   }
 }

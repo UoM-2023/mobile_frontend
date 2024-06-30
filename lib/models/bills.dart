@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:apartflow_mobile_app/global.dart';
 import 'package:http/http.dart' as http;
 
 class Finance {
@@ -24,7 +25,7 @@ class Finance {
   }
 
   static Future<Finance> fetchFinanceData(String unitID) async {
-    final url = 'https://e8ba-2402-4000-21c2-e188-ad0b-f674-765d-4395.ngrok-free.app/finance/getAUserCharge/$unitID';
+    final url = '${baseurl}/finance/getAUserCharge/$unitID';
     print('Fetching finance data from $url');
 
     try {

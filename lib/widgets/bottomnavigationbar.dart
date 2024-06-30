@@ -30,7 +30,7 @@ class NavigationMenu extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.notifications),
-          label: 'Community',
+          label: 'Notifications',
         ),
       ],
       currentIndex: selectedIndex,

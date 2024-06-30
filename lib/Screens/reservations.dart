@@ -1,121 +1,128 @@
-// import 'package:apartflow_mobile_app/widgets/reservations_widget.dart/new_reservation.dart';
-// import 'package:flutter/material.dart';
-// import 'package:apartflow_mobile_app/models/reservation.dart';
-// import 'package:apartflow_mobile_app/widgets/reservations_widget.dart/reservations_list/reservation_list.dart';
-// import 'package:apartflow_mobile_app/models/enum.dart';
+import 'package:apartflow_mobile_app/models/userDetails.dart';
+import 'package:apartflow_mobile_app/widgets/reservations_widget.dart/new_reservation.dart';
+import 'package:apartflow_mobile_app/widgets/reservations_widget.dart/reservation_item.dart';
+import 'package:flutter/material.dart';
+import 'package:apartflow_mobile_app/models/reservation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../widgets/bottomnavigationbar.dart';
 
-// import '../widgets/bottomnavigationbar.dart';
+class Reservations extends StatefulWidget {
+  const Reservations({Key? key});
 
-// class Reservations extends StatefulWidget {
-//   const Reservations({Key? key});
+  @override
+  State<Reservations> createState() => _ReservationsState();
+}
 
-//   @override
-//   State<Reservations> createState() => _ReservationsState();
-// }
+class _ReservationsState extends State<Reservations> {
+  int _selectedIndex = 0;
+  
+   List<Reservation> _registeredReservations = [];
+    bool _isLoading = true;
+  String? _errorMessage;
+   User? _user;
 
-// class _ReservationsState extends State<Reservations> {
-//   int _selectedIndex = 0;
-//   // Using dummy data
-//   final List<Reservation> _registeredReservations = [
-//     Reservation(
-//       amenityName: AmenityType.EventSpace,
-//       startDate: DateTime.now(),
-//       endDate: DateTime.now().add(const Duration(hours: 2)),
-//       needForHours: '2',
-//       time: TimeOfDay.now(),
-//     ),
-//     Reservation(
-//       amenityName: AmenityType.FitnessCenter,
-//       startDate: DateTime.now(),
-//       endDate: DateTime.now().add(const Duration(hours: 2)),
-//       needForHours: '2',
-//       time: TimeOfDay.now(),
-//     )
-//   ];
+   @override
+  void initState() {
+    super.initState();
+    _fetchUserData();
+  }
 
-//   void _openAddReservationsOverlay() {
-//     showModalBottomSheet(
-//       isScrollControlled: true,
-//       context: context,
-//       builder: (ctx) => NewReservation(
-//         onAddReservation: (reservation) {
-//           // Add a new item to the list
-//           setState(() {
-//             _registeredReservations.add(reservation);
-//           });
-//         },
-//       ),
-//     );
-//   }
+   Future<void> _fetchUserData() async {
+  try {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userId = prefs.getString('userId');
 
-//   void _addReservation(Reservation reservation) {
-//     //add a new item to the list
-//     setState(() {
-//       _registeredReservations.add(reservation);
-//     });
-//   }
+    if (userId != null) {
+      User user = await User.fetchUserDetails(userId);
+      setState(() {
+        _user = user;
+      });
+      _fetchReservationData(user.unitId);
+    } else {
+      print('User ID not found.');
+      setState(() {
+        _errorMessage = 'User ID not found.';
+        _isLoading = false;
+      });
+    }
+  } catch (error) {
+    print('Error in _fetchUserDetails: $error');
+    setState(() {
+      _errorMessage = 'Failed to load user details: $error';
+      _isLoading = false;
+    });
+  }
+}
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         backgroundColor: const Color.fromARGB(255, 234, 114, 70),
-//         appBar: AppBar(
-//             title: const Text(
-//               "Reservations",
-//               style: TextStyle(
-//                 color: Colors.white,
-//               ),
-//             ),
-//             backgroundColor: const Color.fromARGB(255, 234, 114, 70),
-//             iconTheme: const IconThemeData(color: Colors.white),
-//             actions: [
-//               IconButton(
-//                   onPressed: _openAddReservationsOverlay,
-//                   icon: const Icon(
-//                     Icons.add,
-//                     color: Colors.white,
-//                   )),
-//             ]),
-//         body: Container(
-//           decoration: const BoxDecoration(
-//             color: Colors.white,
-//             borderRadius: BorderRadius.only(
-//               topLeft: Radius.circular(20),
-//               topRight: Radius.circular(20),
-//             ),
-//           ),
-//           child: Column(
-//             children: [
-//               const SizedBox(
-//                 height: 30,
-//               ),
-//               const Row(children: [
-//                 SizedBox(width: 10),
-//                 Align(
-//                   alignment: Alignment.centerLeft,
-//                   child: Text(
-//                     'New',
-//                     style: TextStyle(
-//                       fontSize: 15,
-//                     ),
-//                   ),
-//                 )
-//               ]),
-//               const SizedBox(
-//                 height: 20,
-//               ),
-//               Expanded(
-//                 child: ReservationsList(reservations: _registeredReservations),
-//               ),
-//               const Text('Earlier'),
-//             ],
-//           ),
-//         ),
-//         bottomNavigationBar: NavigationMenu(selectedIndex: _selectedIndex,
-//               onItemTapped: (index) {
-//                 setState(() {
-//                   _selectedIndex = index;
-//                 });} ),
-//         );
-//   }
-// }
+ Future<void> _fetchReservationData(String unitID) async {
+    
+    try {
+      List<Reservation> reservations = await Reservation.fetchReservationList(unitID);
+      print('Fetched Reservations: $Reservations');
+      setState(() {
+        _registeredReservations = reservations;
+        _isLoading = false;
+      });
+    } catch (error) {
+      print('Error in _fetchReservationData: $error');
+      setState(() {
+        _errorMessage = 'Failed to load data: $error';
+        _isLoading = false;
+      });
+    }
+  }
+  
+  Future<void> _openAddReservationOverlay() async {
+    // Await the result from the NewMaintenance screen
+    final result = await showModalBottomSheet<bool>(
+      isScrollControlled: true,
+      context: context,
+      builder: (ctx) => const NewReservation(),
+    );
+
+  // If the result is true, refresh the list of maintenance requests
+    if (result == true) {
+      _fetchReservationData(_user!.unitId);
+    }
+  }
+
+ 
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: const Color.fromARGB(255, 234, 114, 70),
+            iconTheme: const IconThemeData(color: Colors.white),
+            actions: [
+              IconButton(
+                  onPressed: _openAddReservationOverlay,
+                  icon: const Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  )),
+            ]),
+        backgroundColor: const Color.fromARGB(255, 234, 114, 70),
+        
+        body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : _errorMessage != null
+              ? Center(child: Text(_errorMessage!))
+              : _registeredReservations.isEmpty
+                  ? const Center(child: Text('You have no reservations yet'))
+              : ListView.builder(
+                  itemCount: _registeredReservations.length,
+                  itemBuilder: (context, index) {
+                    final reversedIndex = _registeredReservations.length - 1 - index;
+                    return ReservationItem(_registeredReservations[reversedIndex]);
+                  },
+                ),
+        bottomNavigationBar: NavigationMenu(selectedIndex: _selectedIndex,
+              onItemTapped: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });} ),
+        );
+  }
+}

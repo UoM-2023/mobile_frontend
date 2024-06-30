@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:apartflow_mobile_app/global.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -12,7 +13,7 @@ class PayHereService {
       "sandbox": true,
       "merchant_id": "1226487 ", 
       "merchant_secret": "NDE1NDA2MDgxNjQxMjcwNDc5MTAzMDE1NDQ2NTM4MjU3MTczNTEwMQ==", 
-      "notify_url": "https://e8ba-2402-4000-21c2-e188-ad0b-f674-765d-4395.ngrok-free.app/finance/notify",
+      "notify_url": "${baseurl}/finance/notify",
       "order_id": order_id,
       "items": title,
       "amount": amount.toString(),
@@ -41,7 +42,7 @@ class PayHereService {
   static Future<void> _sendPaymentDataToBackend(User user, String title, double amount, String paymentId) async {
     print("Function: $amount");
       final response = await http.post(
-        Uri.parse('https://e8ba-2402-4000-21c2-e188-ad0b-f674-765d-4395.ngrok-free.app/finance/payment'), // Replace with your backend server address
+        Uri.parse('${baseurl}/finance/payment'), // Replace with your backend server address
         body: jsonEncode({
           'user_id': user.userId,
           'unit_id': user.unitId,

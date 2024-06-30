@@ -15,6 +15,7 @@ import 'package:apartflow_mobile_app/models/bills.dart';
 import '../widgets/bottomnavigationbar.dart';
 import 'payhere_service.dart';
 import '../models/userDetails.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FinancePage extends StatefulWidget {
   const FinancePage({super.key});
@@ -36,22 +37,32 @@ class _FinancePageState extends State<FinancePage> {
     _fetchUserData();
   }
 
-  Future<void> _fetchUserData() async {
-    String userId = 'AP0001R';
-    try {
+ Future<void> _fetchUserData() async {
+  try {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userId = prefs.getString('userId');
+
+    if (userId != null) {
       User user = await User.fetchUserDetails(userId);
       setState(() {
         _user = user;
       });
       _fetchFinanceData(user.unitId);
-    } catch (error) {
-      print('Error in _fetchUserDetails: $error');
+    } else {
+      print('User ID not found.');
       setState(() {
-        _errorMessage = 'Failed to load user details: $error';
+        _errorMessage = 'User ID not found.';
         _isLoading = false;
       });
     }
+  } catch (error) {
+    print('Error in _fetchUserDetails: $error');
+    setState(() {
+      _errorMessage = 'Failed to load user details: $error';
+      _isLoading = false;
+    });
   }
+}
 
   Future<void> _fetchFinanceData(String unitID) async {
     print('User ID2: $unitID');

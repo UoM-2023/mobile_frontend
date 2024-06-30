@@ -12,7 +12,7 @@ class Guests extends StatefulWidget {
   State<Guests> createState() => _GuestsState();
 }
 
-//dummy data
+
 class _GuestsState extends State<Guests> {
    int _selectedIndex = 0;
    List<Guest> _registeredGuests = [];

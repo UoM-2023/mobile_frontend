@@ -73,12 +73,39 @@ class _LoginPageState extends State<LoginPage> {
 
 
   void contactUs() {
-    // Implement contact us functionality
-  }
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        content: const SizedBox(
+          width: 100, 
+          height: 50, 
+          child: Row(
+            children: [
+              Icon(Icons.call),
+              SizedBox(width: 20),
+              Text('011 XXXXXXX'),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Close'),
+          ),
+        ],
+      );
+    },
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       backgroundColor: Constants.primaryBackgroundColor,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -99,20 +126,26 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 40),
-              LogInTextField(
-                controller: userIDController,
-                hintText: 'Username',
-                obscureText: false,
-                iconData: Icons.person,
-                validator: _validateUsername,
+              SizedBox(
+                height: 70,
+                child: LogInTextField(
+                  controller: userIDController,
+                  hintText: 'Username',
+                  obscureText: false,
+                  iconData: Icons.person,
+                  validator: _validateUsername,
+                ),
               ),
               const SizedBox(height: 20),
-              LogInTextField(
-                controller: passwordController,
-                hintText: 'Password',
-                obscureText: true,
-                iconData: Icons.lock,
-                validator: _validatePassword,
+              SizedBox(
+                height: 70,
+                child: LogInTextField(
+                  controller: passwordController,
+                  hintText: 'Password',
+                  obscureText: true,
+                  iconData: Icons.lock,
+                  validator: _validatePassword,
+                ),
               ),
               const SizedBox(height: 25),
               AFButton(

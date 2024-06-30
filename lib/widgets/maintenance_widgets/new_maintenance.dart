@@ -71,7 +71,7 @@ class _NewMaintenanceState extends State<NewMaintenance> {
       try {
        
         final response = await http.post(
-          Uri.parse('http://${baseurl}/maintenance/New_Mnt_Req'),
+          Uri.parse('${baseurl}/maintenance/New_Mnt_Req'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
