@@ -1,7 +1,8 @@
-//import 'package:apartflow_mobile_app/Screens/dashboard.dart';
 import 'package:flutter/material.dart';
-import './Screens/barrell.dart';
+import './Screens/barrell.dart'; // Import your screens here
 import 'package:google_fonts/google_fonts.dart';
+import 'package:apartflow_mobile_app/Screens/login.dart'; // Make sure to import your LoginPage
+import 'package:apartflow_mobile_app/Screens/dashboard.dart'; // Import your DashboardScreen
 
 final theme = ThemeData(
   textTheme: GoogleFonts.latoTextTheme(),
@@ -20,8 +21,11 @@ class ApartFlow extends StatelessWidget {
     return MaterialApp(
       theme: theme,
       debugShowCheckedModeBanner: false,
-      // home: LoginPage(),
-      home: LoginPage(),
+      initialRoute: '/login', 
+      routes: {
+        '/login': (context) => const LoginPage(), 
+        '/dashboard': (context) => const DashboardScreen(), 
+      },
     );
   }
 }

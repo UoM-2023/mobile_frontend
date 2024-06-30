@@ -1,8 +1,9 @@
+import 'package:apartflow_mobile_app/models/userDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:apartflow_mobile_app/models/maintenance.dart';
 import 'package:apartflow_mobile_app/widgets/maintenance_widgets/new_maintenance.dart';
-
-
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/bottomnavigationbar.dart';
 import '../widgets/maintenance_widgets/maintenance_item.dart';
 
@@ -19,15 +20,44 @@ class _MaintenancesState extends State<Maintenances> {
   List<Maintenance> _registeredMaintenances = [];
   bool _isLoading = true;
   String? _errorMessage;
+   User? _user;
 
    @override
   void initState() {
     super.initState();
-    _fetchMaintenanceData();
+    _fetchUserData();
   }
 
-  Future<void> _fetchMaintenanceData() async {
-    String unitID = 'A-101';
+Future<void> _fetchUserData() async {
+  try {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userId = prefs.getString('userId');
+
+    if (userId != null) {
+      User user = await User.fetchUserDetails(userId);
+      setState(() {
+        _user = user;
+      });
+      _fetchMaintenanceData(user.unitId);
+    } else {
+      print('User ID not found.');
+      setState(() {
+        _errorMessage = 'User ID not found.';
+        _isLoading = false;
+      });
+    }
+  } catch (error) {
+    print('Error in _fetchUserDetails: $error');
+    setState(() {
+      _errorMessage = 'Failed to load user details: $error';
+      _isLoading = false;
+    });
+  }
+}
+
+
+  Future<void> _fetchMaintenanceData(String unitID) async {
+    
     try {
       List<Maintenance> maintenances = await Maintenance.fetchMaintenanceList(unitID);
       print('Fetched maintenances: $maintenances');
@@ -54,7 +84,7 @@ class _MaintenancesState extends State<Maintenances> {
 
   // If the result is true, refresh the list of maintenance requests
     if (result == true) {
-      _fetchMaintenanceData();
+      _fetchMaintenanceData(_user!.unitId);
     }
   }
 

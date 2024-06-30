@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:apartflow_mobile_app/util/barrell.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';  // Import for Timer
-
+import 'package:apartflow_mobile_app/global.dart';
 class EventItem extends StatelessWidget {
   const EventItem({
     Key? key,
@@ -143,7 +143,7 @@ void newDataSubmitted() {
   }
 
   Future<void> fetchEvents() async {
-    const String url = 'http://192.168.1.102:3001/newsNotices/newEvent'; // Replace with your actual backend URL
+     String url = '${baseurl}/newsNotices/newEvent'; // Replace with your actual backend URL
 
     try {
       final response = await http.get(Uri.parse(url));

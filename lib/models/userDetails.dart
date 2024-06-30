@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:apartflow_mobile_app/global.dart';
 import 'package:http/http.dart' as http;
 
 class User {
@@ -50,7 +51,7 @@ class User {
   static Future<User> fetchUserDetails(String userId) async {
     try {
       final response = await http.get(
-          Uri.parse('https://169.254.215.55:3001/residentsDetails/getResidentInfo/$userId'));
+          Uri.parse('${baseurl}/residentsDetails/getResidentInfo/$userId'));
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body)['result'][0];

@@ -62,7 +62,11 @@ class ServiceItem extends StatelessWidget {
                 children: [
                   Expanded(child: Text(description)),
                   Expanded(child: Text(formattedDateOrStartDate)),
-                  if (formattedEndDate != null) Text(formattedEndDate!),
+                  if (formattedEndDate != null)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: Text(formattedEndDate!),
+                    ),
                   if (additionalText != null) Text(additionalText!),
                 ],
               ),

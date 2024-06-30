@@ -1,8 +1,8 @@
 import 'package:apartflow_mobile_app/Screens/dashboard.dart';
+import 'package:apartflow_mobile_app/Screens/notifications.dart';
 import 'package:apartflow_mobile_app/util/barrell.dart';
 import 'package:flutter/material.dart';
 
-// import 'package:apartflow_mobile_app/Screens/community_chat/community.dart';
 
 import '../Screens/Bills.dart';
 
@@ -29,8 +29,8 @@ class NavigationMenu extends StatelessWidget {
           label: 'Bills',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.people_alt_rounded),
-          label: 'Community',
+          icon: Icon(Icons.notifications),
+          label: 'Notifications',
         ),
       ],
       currentIndex: selectedIndex,
@@ -55,11 +55,11 @@ class NavigationMenu extends StatelessWidget {
             break;
           case 2:
             // Navigate to Community page
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => Community()),
-            // );
-            // break;
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => NotificationsPage()),
+            );
+            break;
           default:
             break;
         }
